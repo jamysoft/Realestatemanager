@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Realestatemanager</string>
+    <string name="page_title">Reale State Manager</string>
+    <string name="search">search</string>
+    <string name="more">more</string>
+    <string name="favorite">favorite</string>
+    <string name="content_description_search">description</string>
+    <string name="content_description_favorite">description</string>
+    <string name="content_description_more">description</string>
+    <string name="update">update</string>
+</resources>

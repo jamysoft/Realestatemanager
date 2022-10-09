@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    >
+
+    <ImageView
+        android:id="@+id/realtyShot"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/belleappart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/realtyType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/realtyShot"
+        app:layout_constraintTop_toTopOf="@id/realtyShot"
+        android:text="House"
+        android:paddingLeft="15dp"
+
+        />
+    <TextView
+        android:id="@+id/realtyTown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/realtyType"
+        app:layout_constraintTop_toBottomOf="@id/realtyType"
+        android:text="Paris"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/realtyPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/realtyType"
+        app:layout_constraintTop_toBottomOf="@id/realtyTown"
+        android:text="$ 17 855 888  "
+        android:paddingLeft="15dp"
+        android:layout_marginTop="10dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
