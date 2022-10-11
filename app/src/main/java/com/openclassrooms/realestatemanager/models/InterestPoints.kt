@@ -11,8 +11,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName ="nearbyInterestPoints_table")
 data class InterestPoints(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_Points") var idPoints: Int,
+    @ColumnInfo(name = "id_Points") var idPoints: Int?,
     @ColumnInfo(name = "name_point") var namePoint:String,
    ) {
-    constructor(namePoint: String):this(0,namePoint )
+    constructor(namePoint: String):this(null,namePoint )
 }

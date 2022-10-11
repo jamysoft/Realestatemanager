@@ -16,9 +16,9 @@ L’adresse du bien ;
 @Entity(tableName ="shot_table")
 data class Shot(
     @ColumnInfo(name="id_shot")
-    @PrimaryKey(autoGenerate = true) var idShot :Int,
+    @PrimaryKey(autoGenerate = true) var idShot :Int?,
     @ColumnInfo(name="description_shot") var descriptionShot:String,
     @ColumnInfo(name="shot", typeAffinity = BLOB) var shot:ByteArray
 ) {
-    constructor(descriptionShot: String,shot: ByteArray):this(0,descriptionShot,shot)
+    constructor(descriptionShot: String,shot: ByteArray):this(null,descriptionShot,shot)
 }

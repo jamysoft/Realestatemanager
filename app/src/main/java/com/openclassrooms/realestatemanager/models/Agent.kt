@@ -11,11 +11,11 @@ L'agent immobilier en charge de ce bien.
 @Entity(tableName = "agent_table")
 data class Agent(
             @PrimaryKey(autoGenerate = true)
-            @ColumnInfo(name="id_agent") var idAgent :Int,
+            @ColumnInfo(name="id_agent") var idAgent :Int?,
             @ColumnInfo(name="first_name") var firstName:String,
             @ColumnInfo(name="last_name") var lastName:String,
             @ColumnInfo(name="email") var email:String,
             @ColumnInfo(name="phone") var phone:String
             ) {
-    constructor(firstName: String,lastName: String,email: String,phone: String):this(0,firstName,lastName,email,phone)
+    constructor(firstName: String,lastName: String,email: String,phone: String):this(null,firstName,lastName,email,phone)
 }

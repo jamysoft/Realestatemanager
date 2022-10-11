@@ -32,5 +32,8 @@ class Utils {
         val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
         return wifi.isWifiEnabled
     }
+    fun integerToString(number:Integer):String{
+        return ""
+    }
 
 }

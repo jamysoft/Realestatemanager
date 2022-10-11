@@ -31,7 +31,7 @@ La date de vente du bien, s’il a été vendu ;
 @Entity(tableName ="realty_table")
 data class Realty(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_realty") var idRealty: Int,
+    @ColumnInfo(name = "id_realty") var idRealty: Int?,
     @ColumnInfo(name = "type") var type:String,
     @ColumnInfo(name = "price") var price:Int,
     @ColumnInfo(name = "surface") var surface:Int,
@@ -47,8 +47,8 @@ data class Realty(
    //Constructeur secondaire
     constructor(type: String,price:Int,surface:Int,numberOfPiece:Int,description: String,town:String,
                 address: String,isavailable: Boolean,entryDate: String,idAgent: Int)
-            :this(0,type,price,surface,numberOfPiece,description,town,address,isavailable,entryDate,
-        entryDate,idAgent)
+            :this(null,type,price,surface,numberOfPiece,description,town,address,isavailable,entryDate,
+        null,idAgent)
 
 
 }

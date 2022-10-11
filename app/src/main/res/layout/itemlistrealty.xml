@@ -10,7 +10,6 @@
         android:id="@+id/realtyShot"
         android:layout_width="80dp"
         android:layout_height="80dp"
-
         android:scaleType="centerCrop"
         android:src="@drawable/belleappart"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +22,7 @@
         app:layout_constraintTop_toTopOf="@id/realtyShot"
         android:text="House"
         android:paddingLeft="15dp"
+        android:textStyle="bold"
 
         />
     <TextView
@@ -44,5 +44,17 @@
         android:text="$ 17 855 888  "
         android:paddingLeft="15dp"
         android:layout_marginTop="10dp"
+        android:textColor="#E6086F"
         />
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/realtyPrice"
+        app:layout_constraintBottom_toBottomOf="@id/realtyPrice"
+        android:paddingLeft="15dp"
+        android:background="@drawable/ic_edit_24"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

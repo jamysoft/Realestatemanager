@@ -13,13 +13,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Realestatemanager"
-        tools:targetApi="31"
-        tools:ignore="MissingClass">
+        tools:ignore="MissingClass"
+        tools:targetApi="31">
+        <activity
+            android:name=".AddActivity"
+            android:exported="false"
+            android:label="Add activity"
+            android:parentActivityName=".MainActivity"
+            />
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="Detail activity"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Realestatemanager.MyTheme"
-            >
+            android:theme="@style/Theme.Realestatemanager.MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

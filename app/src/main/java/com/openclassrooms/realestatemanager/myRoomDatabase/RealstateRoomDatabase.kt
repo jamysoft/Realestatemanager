@@ -17,7 +17,7 @@ import java.util.*
  * This is the backend. The database. This used to be done by the OpenHelper.
  * The fact that this has very few comments emphasizes its coolness.
  */
-@Database(entities = [Realty::class,Agent::class,Shot::class,InterestPoints::class,RealtyInterestPoints::class], version = 1)
+@Database(entities = [Realty::class,Agent::class,Shot::class,InterestPoints::class,RealtyInterestPoints::class], version = 2)
 abstract class RealstateRoomDatabase : RoomDatabase() {
 
     abstract fun realtyDao(): RealtyDao
@@ -75,12 +75,26 @@ abstract class RealstateRoomDatabase : RoomDatabase() {
 
 
 
-           var realty = Realty("apart",2000000,10,3,"belle appart","Paris", "maroc ",false,Date().toString(),2)
-           println(realty.toString())
+           var realty = Realty("Apartment",2000000,10,3,"belle appartement","Paris", "maroc ",false,Date().toString(),2)
             realtyDao.insert(realty)
-            var realty2 = Realty("ferme",2000000,10,3,"ferme mkhayra tbarklah ","Paris", "maroc ",false,Date().toString(),2)
-            println(realty2.toString())
+            var realty2 = Realty("Maison",2000000,10,3,"magnifique Maison ! ","Yerre", "maroc ",false,Date().toString(),2)
             realtyDao.insert(realty2)
+            var realty3 = Realty("Duplex",2000000,10,3,"Jolie Duplex ","Brunoy", "maroc ",false,Date().toString(),2)
+            realtyDao.insert(realty3)
+            var realty4 = Realty("Studio",2000000,10,3,"Studio bien déménagé! ","Nice", "maroc ",false,Date().toString(),2)
+            realtyDao.insert(realty4)
+            var realty5 = Realty("Apartment",2000000,10,3,"belle appartement","Montgeron", "maroc ",false,Date().toString(),2)
+            realtyDao.insert(realty5)
+            var realty6 = Realty("Ferme",2000000,10,3,"Magnifique Ferme ! ","Saint Maurice", "maroc ",false,Date().toString(),2)
+            realtyDao.insert(realty6)
+            var realty7 = Realty("Villa",2000000,10,3,"Grande magnifique Villa ","Créteil", "maroc ",false,Date().toString(),2)
+            realtyDao.insert(realty7)
+            var realty8= Realty("Studio",2000000,10,3,"Studio bien déménagé !","Vincenne", "maroc ",false,Date().toString(),2)
+            realtyDao.insert(realty8)
+            var realty9 = Realty("Maison",2000000,10,3,"Grand maison !","Paris", "Paris ",false,Date().toString(),2)
+            realtyDao.insert(realty9)
+            var realty10 = Realty("Duplex",2000000,10,3,"Jolie Duplex! ","Paris", "Bordeaux ",false,Date().toString(),2)
+            realtyDao.insert(realty10)
 
 
         }
