@@ -17,4 +17,6 @@
     <string name="adresslabel">Adress</string>
     <string name="add">add</string>
     <string name="content_description_add">add</string>
+    <string name="makeitsolde">Make it sold</string>
+    <string name="delete">delete</string>
 </resources>

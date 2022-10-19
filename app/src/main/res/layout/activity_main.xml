@@ -25,16 +25,18 @@
             app:titleMarginStart="0dp"
             app:navigationIcon="@drawable/ic_menu_24dp"
             app:titleTextAppearance="@style/MyStyle"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleViewListRealty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp"
-            tools:listitem="@layout/itemlistrealty"
-           />
+            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
     </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewListRealty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        tools:listitem="@layout/itemlistrealty"
+        app:layout_constraintTop_toBottomOf="@id/myCordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

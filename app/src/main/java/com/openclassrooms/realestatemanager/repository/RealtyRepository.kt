@@ -15,6 +15,7 @@
  */
 package com.openclassrooms.realestatemanager.repository
 import androidx.annotation.WorkerThread
+import androidx.room.Query
 import com.openclassrooms.realestatemanager.dao.RealtyDao
 import com.openclassrooms.realestatemanager.models.Realty
 import kotlinx.coroutines.flow.Flow
@@ -35,7 +36,22 @@ import kotlinx.coroutines.flow.Flow
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(realty: Realty) {
-        realtyDao.insert(realty)
+    suspend fun insert(realty: Realty):Long{
+         return realtyDao.insert(realty)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun delete(id: Int) {
+        realtyDao.deleteRealtyById(id)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateRealty(realty:Realty) {
+        realtyDao.updateRealty(realty)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateStatusRealty() {
+        realtyDao.updateStatusRealty()
     }
 }

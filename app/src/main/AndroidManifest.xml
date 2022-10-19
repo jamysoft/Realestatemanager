@@ -18,8 +18,9 @@
         <activity
             android:name=".AddActivity"
             android:exported="false"
-            android:label="Add activity"
+            android:label=""
             android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Realestatemanager.MyTheme"
             />
         <activity
             android:name=".DetailActivity"

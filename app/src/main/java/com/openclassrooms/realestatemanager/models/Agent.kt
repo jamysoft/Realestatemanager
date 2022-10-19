@@ -16,6 +16,4 @@ data class Agent(
             @ColumnInfo(name="last_name") var lastName:String,
             @ColumnInfo(name="email") var email:String,
             @ColumnInfo(name="phone") var phone:String
-            ) {
-    constructor(firstName: String,lastName: String,email: String,phone: String):this(null,firstName,lastName,email,phone)
-}
+            )

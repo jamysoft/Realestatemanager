@@ -35,7 +35,8 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
- // implementation 'androidx.appcompat:appcompat:1.5.1'
+  //  implementation 'androidx.appcompat:appcompat:1.5.1'
+   // implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
@@ -45,10 +46,8 @@ dependencies {
    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
 
-
-
     //material Components
-    implementation 'com.google.android.material:material:1.5.0-alpha04'
+   implementation 'com.google.android.material:material:1.5.0-alpha04'
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
@@ -58,6 +57,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
     // Kotlin components
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines"

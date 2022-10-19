@@ -20,6 +20,7 @@ import android.app.Application
 import com.openclassrooms.realestatemanager.myRoomDatabase.RealstateRoomDatabase
 import com.openclassrooms.realestatemanager.repository.AgentRepository
 import com.openclassrooms.realestatemanager.repository.RealtyRepository
+import com.openclassrooms.realestatemanager.repository.ShotRepository
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -38,5 +39,8 @@ class RealStateManagerApplication : Application() {
     }
     val repository2 by lazy {
         AgentRepository(database.agentDao())
+    }
+    val repositoryShot by lazy {
+        ShotRepository(database.shotDao())
     }
 }
