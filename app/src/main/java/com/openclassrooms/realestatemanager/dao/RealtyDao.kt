@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.dao
 
 import androidx.room.*
 import com.openclassrooms.realestatemanager.models.Realty
+import com.openclassrooms.realestatemanager.models.RealtyItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,8 +23,8 @@ interface RealtyDao {
     fun updateRealty(Realty: Realty)
 
 
-    @Query("UPDATE realty_table SET is_available = 0")
-    suspend fun updateStatusRealty()
+    @Query("UPDATE realty_table SET is_available = 0 WHERE id_realty= :id")
+    suspend fun updateStatusRealty(id:Int)
 
     @Query("DELETE FROM realty_table")
     //suspend meaning??
@@ -32,5 +33,15 @@ interface RealtyDao {
     @Query("DELETE FROM realty_table WHERE id_realty = :id ")
     suspend fun deleteRealtyById(id: Int)
 
+   /* @Query("SELECT realty_table .id_realty,type,price,surface,number_piece,town,address,is_available,entry_date,sale_date,shot FROM  realty_table INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty")
+    fun getAllRealtyItem():Flow<List<RealtyItem>>
+
+    */
+   @Query("SELECT realty_table .id_realty as idRealty,type,price,surface,number_piece as numberOfPiece,town," +
+           "description_realty as description ,address,is_available as isAvailable,entry_date as entryDate" +
+           ",sale_date as saleDate,shot FROM  realty_table " +
+           "INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty " +
+           "where description_shot=\"MainShot\"")
+   fun getAllRealtyItem():Flow<List<RealtyItem>>
 
 }

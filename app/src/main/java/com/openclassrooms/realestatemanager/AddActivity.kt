@@ -37,7 +37,7 @@ class AddActivity : AppCompatActivity() {
     lateinit var mFloatingActionButton:FloatingActionButton
     lateinit var mImageView:ImageView
     var mArrayBitmap: MutableList<Bitmap> = ArrayList()
-    var mByteArray:MutableList<ByteArray> = ArrayList()
+   // var mByteArray:MutableList<ByteArray> = ArrayList()
     lateinit var  imageadapter:CustomizedGalleryAdapter
     lateinit var mlinearLayout:LinearLayout
     lateinit var  gridview: GridView
@@ -155,11 +155,17 @@ class AddActivity : AppCompatActivity() {
                    var realty = Realty(null, typeText.toString(), price, surface, numberOfPiece, descriptionText.toString(), townText.toString(), adressText.toString(),
                     true, TodayDate!!, null, 1)
                    myViewModel.insert(realty).observe(this) {
-                    println("last id id $it"+mByteArray[0])
-                    var byte:ByteArray=mByteArray[0]
-
-                    val shot= Shot(null,"test",   mArrayBitmap[0],it.toInt())
-                    myViewModel.insert(shot)
+                       //add  shots of the new   realty
+                       var size=mArrayBitmap.size
+                       size--
+                        for(i in 0..size) {
+                            var description="GeneralShot"
+                            if(i==0){
+                                description="MainShot"
+                            }
+                            val shot = Shot(null, description , mArrayBitmap[i], it.toInt())
+                            myViewModel.insert(shot)
+                        }
                 }
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(KEY_ADD_REALTY, "OK")
@@ -195,8 +201,9 @@ class AddActivity : AppCompatActivity() {
                         val inputStream = contentResolver.openInputStream(imageuri)
                         var bitmap = BitmapFactory.decodeStream(inputStream)
                         val stream = ByteArrayOutputStream()
-                        mByteArray.add(stream.toByteArray())
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                     //   mByteArray.add(stream.toByteArray())
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                      //  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, mByteArray.si)
                         mArrayBitmap?.add(bitmap)
                     }
                 }
@@ -210,8 +217,8 @@ class AddActivity : AppCompatActivity() {
                     val inputStream = contentResolver.openInputStream(uri)
                     var bitmap = BitmapFactory.decodeStream(inputStream)
                     val stream = ByteArrayOutputStream()
-                    mByteArray.add(stream.toByteArray())
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                   // mByteArray.add(stream.toByteArray())
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
                     mArrayBitmap?.add(bitmap)
                 }
                 Toast.makeText(this, "You picked  one Image ", Toast.LENGTH_LONG).show()
@@ -227,4 +234,5 @@ class AddActivity : AppCompatActivity() {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
+
 }

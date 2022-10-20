@@ -9,11 +9,15 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ShotDao {
+    @Query("SELECT * FROM shot_table")
+    fun getAllShot(): Flow<List<Shot>>
+
     @Query("SELECT * FROM shot_table  WHERE  id_realty = :idRealty")
      fun getAllShotByIdRealty(idRealty:Int): Flow<List<Shot>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(shot: Shot):Long
+
 /*
     //suspend meaning??
     suspend fun deleteAll()

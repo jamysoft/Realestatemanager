@@ -8,9 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 class ShotRepository(private val shotDao: ShotDao) {
 
+    val getAllShot: Flow<List<Shot>> = shotDao.getAllShot()
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getAllShotByIdRealty(id:Int): Flow<List<Shot>> = shotDao.getAllShotByIdRealty(id)
+     fun getAllShotByIdRealty(id:Int): Flow<List<Shot>> = shotDao.getAllShotByIdRealty(id)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

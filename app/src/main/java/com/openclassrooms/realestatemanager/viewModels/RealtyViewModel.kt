@@ -2,25 +2,32 @@
 package com.openclassrooms.realestatemanager.viewModels
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.models.Realty
+import com.openclassrooms.realestatemanager.models.RealtyItem
 import com.openclassrooms.realestatemanager.models.Shot
 import com.openclassrooms.realestatemanager.repository.RealtyRepository
 import com.openclassrooms.realestatemanager.repository.ShotRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.security.acl.Owner
+import java.util.concurrent.Flow
 
 /**
  * View Model to keep a reference to the word repository and
  * an up-to-date list of all words.
  */
 
-class RealtyViewModel(private val repository: RealtyRepository,private val shotRepository: ShotRepository) : ViewModel() {
+class RealtyViewModel(private val repository: RealtyRepository, val shotRepository: ShotRepository) : ViewModel() {
 
     val allRealty: LiveData<List<Realty>> = repository.getAllRealtyNewerToOlder.asLiveData()
-
+    val allShoot: LiveData<List<Shot>> = shotRepository.getAllShot.asLiveData()
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
+
+    fun getRealtyById(id: Int): LiveData<Realty> {
+        return repository.getRealtyById(id).asLiveData()
+    }
     fun insert(realty: Realty):MutableLiveData<Long>{
         var id = MutableLiveData<Long>()
         viewModelScope.launch {
@@ -35,12 +42,13 @@ class RealtyViewModel(private val repository: RealtyRepository,private val shotR
     fun updateRealty(realty: Realty) = viewModelScope.launch {
             repository.updateRealty(realty)
     }
-    fun updateStatusRealty() = viewModelScope.launch {
-        repository.updateStatusRealty()   }
+    fun updateStatusRealty(id:Int) = viewModelScope.launch {
+        repository.updateStatusRealty(id)   }
 
-    suspend fun allShotByRealty(id:Int):LiveData<List<Shot>>{
-        return  shotRepository.getAllShotByIdRealty(id).asLiveData()
-    }
+
+         fun allShotByIdRealty(id: Int): LiveData<List<Shot>> {
+            return shotRepository.getAllShotByIdRealty(id).asLiveData()
+        }
 
     fun insert(shot: Shot):MutableLiveData<Long>{
         var id = MutableLiveData<Long>()
@@ -49,7 +57,14 @@ class RealtyViewModel(private val repository: RealtyRepository,private val shotR
         }
         return id
     }
+    val getAllRealtyItem:LiveData<List<RealtyItem>> = repository.getAllRealtyItem.asLiveData()
 
+
+    fun deleteByIdRealty(idRealty: Int) =viewModelScope.launch {
+        idRealty?.let {
+            repository.delete(it)
+        }
+    }
 }
 
 //Erreur Inheritance from an interface with '@JvmDefault' members is only allowed with -Xjvm-default option lié à la version de appcompat

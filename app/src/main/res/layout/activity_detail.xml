@@ -5,14 +5,143 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
-<TextView
-    android:id="@+id/typeRealty"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:textSize="40sp"
-    />
 
+    <HorizontalScrollView
+        android:id="@+id/hScrolView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="900dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numColumns="500"
+                    android:columnWidth="200dp"
+                    android:gravity="center"
+                    tools:listitem="@layout/itempic"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:scrollbars="horizontal"
+                    android:stretchMode="none"
+                    android:verticalSpacing="10dp"
+                    android:horizontalSpacing="10dp"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/titleDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/hScrolView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Description"
+        android:layout_margin="12dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_baseline_description_24"
+        />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Description"
+        android:layout_margin="12dp"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:id="@+id/titleSurface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Surface : "
+        android:layout_margin="12dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_baseline_width_wide_24"
+        />
+
+    <TextView
+        android:id="@+id/surface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/titleSurface"
+        app:layout_constraintStart_toEndOf="@id/titleSurface"
+        android:text="1200 m"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+        android:textSize="16sp"
+        />
+
+
+    <TextView
+        android:id="@+id/titleNumberOfRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/surface"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Number of rooms : "
+        android:layout_margin="12dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_baseline_home_24"
+        />
+    <TextView
+        android:id="@+id/numberOfRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/titleNumberOfRoom"
+        app:layout_constraintStart_toEndOf="@id/titleNumberOfRoom"
+        android:text=" 5"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:id="@+id/titleLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleNumberOfRoom"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Location : "
+        android:layout_margin="12dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_baseline_location_on_24"
+        />
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/titleLocation"
+        app:layout_constraintStart_toEndOf="@id/titleLocation"
+        android:text="Rabat Maroc"
+        android:layout_marginTop="4dp"
+        android:textSize="16sp"
+        />
+    <ImageView
+        android:id="@+id/staticMapRealty"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/titleLocation"
+        app:layout_constraintStart_toEndOf="@id/titleNumberOfRoom"
+        android:src="@drawable/belleappart"
+        android:layout_margin="12dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

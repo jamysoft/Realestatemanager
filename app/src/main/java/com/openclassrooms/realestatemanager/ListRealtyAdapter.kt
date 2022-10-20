@@ -13,19 +13,20 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.openclassrooms.realestatemanager.models.Realty
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import com.openclassrooms.realestatemanager.models.RealtyItem
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
-import kotlinx.coroutines.NonDisposableHandle.parent
-import kotlinx.coroutines.launch
-import java.util.zip.Inflater
 
 
 const val KEY_ID_REALTY = "key_id_realty"
 
-class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyViewModel): ListAdapter<Realty, ListRealtyAdapter.MyViewHolder>(REALTY_COMPARATOR) {
+class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyViewModel): ListAdapter<RealtyItem, ListRealtyAdapter.MyViewHolder>(REALTY_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup,ViewType: Int):MyViewHolder {
+
         return MyViewHolder.create(parent,myViewModel)
     }
 
@@ -56,13 +57,13 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
                     Intent(holder.itemView.context,AddActivity::class.java)
                     return when (item?.itemId) {
                         R.id.delete -> {
-                            myViewModel.delete(current)
+                            myViewModel.deleteByIdRealty(current.idRealty)
                             Toast.makeText( holder.itemView.context, "delete ${current.toString()}", Toast.LENGTH_SHORT).show()
                             true
                         }
                         R.id.makeItSold -> {
                             Toast.makeText(holder.itemView.context, "Sold click detected", Toast.LENGTH_SHORT).show()
-                                myViewModel.updateStatusRealty()
+                                myViewModel.updateStatusRealty(current.idRealty)
                             true
                         }
                         else -> false
@@ -80,7 +81,7 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
 
             true
         }
-        holder.bind(current)
+        holder.bind(current,myViewModel)
     }
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -91,12 +92,11 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
         private val realtyType: TextView = itemView.findViewById(R.id.realtyType)
         private val updateButton: Button = itemView.findViewById(R.id.updateButton)
 
-        fun bind(currentRealty: Realty) {
+         fun bind(currentRealty: RealtyItem, myViewModel: RealtyViewModel) {
             /*****  CONVERT Drawable to  bitmap ****/
 
-            var bitmap = BitmapFactory.decodeResource(itemView.context.getResources(),
-            R.drawable.belleappart);
-            realtyShot.setImageBitmap(bitmap)
+            var bitmap = BitmapFactory.decodeResource(itemView.context.getResources(), R.drawable.belleappart)
+             realtyShot.setImageBitmap(currentRealty.shot)
             realtyTown.setText(currentRealty.town)
             realtyPrice.setText("$ ${currentRealty.price}")
             realtyType.setText(currentRealty.type)
@@ -116,7 +116,10 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
             }
         }
         companion object {
-            fun create(parent: ViewGroup, myViewModel: RealtyViewModel): MyViewHolder {
+            fun create(
+                parent: ViewGroup,
+                myViewModel: RealtyViewModel,
+            ): MyViewHolder {
                 val view: View = LayoutInflater.from(parent.context).inflate(R.layout.itemlistrealty, parent, false)
                 return MyViewHolder(view)
             }
@@ -125,12 +128,12 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
     }
 
     companion object {
-        private val REALTY_COMPARATOR = object : DiffUtil.ItemCallback<Realty>() {
-            override fun areItemsTheSame(oldItem: Realty, newItem: Realty): Boolean {
+        private val REALTY_COMPARATOR = object : DiffUtil.ItemCallback<RealtyItem>() {
+            override fun areItemsTheSame(oldItem: RealtyItem, newItem: RealtyItem): Boolean {
                 return oldItem === newItem
             }
 
-            override fun areContentsTheSame(oldItem: Realty, newItem: Realty): Boolean {
+            override fun areContentsTheSame(oldItem: RealtyItem, newItem: RealtyItem): Boolean {
                 return oldItem.address == newItem.address
             }
         }

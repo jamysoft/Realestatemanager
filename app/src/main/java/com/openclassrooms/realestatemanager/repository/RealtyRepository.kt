@@ -18,6 +18,8 @@ import androidx.annotation.WorkerThread
 import androidx.room.Query
 import com.openclassrooms.realestatemanager.dao.RealtyDao
 import com.openclassrooms.realestatemanager.models.Realty
+import com.openclassrooms.realestatemanager.models.RealtyItem
+import com.openclassrooms.realestatemanager.models.Shot
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -51,7 +53,14 @@ import kotlinx.coroutines.flow.Flow
     }
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun updateStatusRealty() {
-        realtyDao.updateStatusRealty()
+    suspend fun updateStatusRealty(id:Int) {
+        realtyDao.updateStatusRealty(id)
     }
+    val  getAllRealtyItem:Flow<List<RealtyItem>> = realtyDao.getAllRealtyItem()
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun getRealtyById(id:Int): Flow<Realty> = realtyDao.getRealtyById(id)
+
+
 }

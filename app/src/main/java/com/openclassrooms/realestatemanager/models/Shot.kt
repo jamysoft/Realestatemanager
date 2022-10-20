@@ -22,5 +22,5 @@ data class Shot(
     @ColumnInfo(name="description_shot") var descriptionShot:String,
   //  @ColumnInfo(typeAffinity = BLOB) var shot:ByteArray,
     var shot: Bitmap,
-    @ColumnInfo(name = "id_realty") val idRealty: Int
+    @ColumnInfo(name = "id_realty") var idRealty: Int
 )

@@ -44,29 +44,35 @@ class MainActivity : AppCompatActivity() {
         if(intent.getStringExtra(KEY_ADD_REALTY)=="OK"){
             Toast.makeText(this, "Realty is added  successfully", Toast.LENGTH_SHORT).show()
             }
-        myViewModel.allRealty.observe(this){
+       /* myViewModel.allRealty.observe(this){
             println("size = ${it.size}+list :"+it.toString())
             it.let {
                 adapter.submitList(it)
             }
 
-        }
+        */
+
+
+
+         myViewModel.getAllRealtyItem.observe(this@MainActivity) {
+             adapter.submitList(it)
+         }
 
         myViewModel2.allAgent.observe(this){
             println("size = ${it.size}+list :"+it.toString())
         }
         fun showTextualActionBar(context: Context) {
             val callback = object : ActionMode.Callback {
-                override fun onCreateActionMode(mode: androidx.appcompat.view.ActionMode?, menu: Menu?): Boolean {
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                     menuInflater.inflate(R.menu.top_app_bar, menu)
                     return true
                 }
 
-                override fun onPrepareActionMode(mode: androidx.appcompat.view.ActionMode?, menu: Menu?): Boolean {
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                     return false
                 }
 
-                override fun onActionItemClicked(mode: androidx.appcompat.view.ActionMode?, item: MenuItem?): Boolean {
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     return when (item?.itemId) {
                         R.id.add -> {
                             println("option1")
@@ -85,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onDestroyActionMode(mode: androidx.appcompat.view.ActionMode?) {
+                override fun onDestroyActionMode(mode: ActionMode?) {
 
                 }
             }
@@ -102,14 +108,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+      //  val intent = Intent(this,AddActivity::class.java)
         val intent = Intent(this,AddActivity::class.java)
+
         when (item.itemId) {
             R.id.add -> startActivity(intent)
             R.id.search -> {
                 Toast.makeText(this,"Search selected",Toast.LENGTH_LONG).show()
-                lifecycleScope.launch {
-                    myViewModel.updateStatusRealty()
-                }
 
             }
         }

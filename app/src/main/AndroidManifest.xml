@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.openclassrooms.realestatemanager">
-
+    package="com.openclassrooms.realestatemanager" >
+    <uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <application
+        android:requestLegacyExternalStorage="true"
+        android:requestRawExternalStorageAccess="true"
         android:name=".viewModels.RealStateManagerApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,25 +23,25 @@
         tools:ignore="MissingClass"
         tools:targetApi="31">
         <activity
+            android:name=".ListShotActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddActivity"
             android:exported="false"
             android:label=""
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.Realestatemanager.MyTheme"
-            />
+            android:theme="@style/Theme.Realestatemanager.MyTheme" />
         <activity
             android:name=".DetailActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
             android:label="Detail activity"
-            />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Realestatemanager.MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
