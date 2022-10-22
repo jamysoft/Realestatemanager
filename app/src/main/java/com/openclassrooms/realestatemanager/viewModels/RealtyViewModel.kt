@@ -65,6 +65,14 @@ class RealtyViewModel(private val repository: RealtyRepository, val shotReposito
             repository.delete(it)
         }
     }
+    fun updateShot(shot: Shot) = viewModelScope.launch {
+        shotRepository.updateShot(shot)
+    }
+    fun deleteAllShotOfRealty(idRealty: Int) =viewModelScope.launch {
+        idRealty?.let {
+            shotRepository.deleteAllShotOfRealty(it)
+        }
+    }
 }
 
 //Erreur Inheritance from an interface with '@JvmDefault' members is only allowed with -Xjvm-default option lié à la version de appcompat

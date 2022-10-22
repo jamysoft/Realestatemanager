@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.utils
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.net.wifi.WifiManager
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.models.Shot
+import java.io.ByteArrayOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,7 +51,7 @@ abstract class Utils{
         }
 
 
-    fun listShotToArrayBitmap(listShot:List<Shot>): ArrayList<Bitmap> {
+    fun convertListShotToArrayBitmap(listShot:List<Shot>): ArrayList<Bitmap> {
         var arrayBitmap=ArrayList<Bitmap>()
         var size=listShot.size
         size--
@@ -56,6 +60,15 @@ abstract class Utils{
         }
         return arrayBitmap
     }
+        fun convertUriToBitmap(uri:Uri,contentResolver:ContentResolver): Bitmap {
+            val inputStream = contentResolver.openInputStream(uri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            val stream = ByteArrayOutputStream()
+            // mByteArray.add(stream.toByteArray())
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            return bitmap
+
+        }
 
 
     }

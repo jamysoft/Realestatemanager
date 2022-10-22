@@ -1,9 +1,7 @@
 package com.openclassrooms.realestatemanager.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.openclassrooms.realestatemanager.models.Realty
 import com.openclassrooms.realestatemanager.models.Shot
 import kotlinx.coroutines.flow.Flow
 
@@ -18,12 +16,13 @@ interface ShotDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(shot: Shot):Long
 
+    @Update
+    suspend fun updateShot(shot: Shot)
 /*
     //suspend meaning??
     suspend fun deleteAll()
-
+*/
     @Query("DELETE FROM shot_table WHERE id_realty = :id ")
     suspend fun deleteAllShotOfRealty(id: Int)
 
- */
 }

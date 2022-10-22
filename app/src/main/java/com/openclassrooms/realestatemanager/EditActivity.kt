@@ -5,23 +5,19 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
-import com.openclassrooms.realestatemanager.models.Realty
 import com.openclassrooms.realestatemanager.models.Shot
-import com.openclassrooms.realestatemanager.utils.Utils
-import com.openclassrooms.realestatemanager.utils.Utils.Companion.listShotToArrayBitmap
+import com.openclassrooms.realestatemanager.utils.Utils.Companion.convertListShotToArrayBitmap
+import com.openclassrooms.realestatemanager.utils.Utils.Companion.convertUriToBitmap
 import com.openclassrooms.realestatemanager.viewModels.RealStateManagerApplication
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModelFactory
@@ -38,9 +34,12 @@ class EditActivity : AppCompatActivity() {
     private lateinit var  mAddressTextField: TextInputLayout
     private lateinit var  mButton: Button
     private lateinit var mFloatingActionButton:FloatingActionButton
-    private var mArrayBitmap: MutableList<Bitmap> = ArrayList()
+    private var mArrayBitmapAtFirst: MutableList<Bitmap> = ArrayList()
+    private var mArrayBitmapAtEnd: MutableList<Bitmap> = ArrayList()
     private lateinit var  imageadapter:GalleryAdapter
     private lateinit var  mRecyclerView: RecyclerView
+    lateinit var idRealty:Integer
+
 
     private val myViewModel: RealtyViewModel by viewModels {
         RealtyViewModelFactory((application as RealStateManagerApplication).repository,(application as RealStateManagerApplication).repositoryShot)
@@ -65,7 +64,7 @@ class EditActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         var  thereIsError=false
         //recuperate idRealty From intent
-        val idRealty= intent.extras!!.get(KEY_EDIT_REALTY)
+        idRealty= intent.extras!!.get(KEY_EDIT_REALTY) as Integer
         imageadapter=GalleryAdapter()
         mRecyclerView.adapter=imageadapter
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -73,11 +72,11 @@ class EditActivity : AppCompatActivity() {
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         myViewModel.allShotByIdRealty(idRealty as Int).observe(this){
-            mArrayBitmap=listShotToArrayBitmap(it)
-            imageadapter.submitList(mArrayBitmap)
+            mArrayBitmapAtFirst=convertListShotToArrayBitmap(it)
+            imageadapter.submitList(mArrayBitmapAtFirst)
         }
 
-        myViewModel.getRealtyById(idRealty).observe(this){
+        myViewModel.getRealtyById(idRealty as Int).observe(this){
            // printCurrentRealtyIntoUI(it)
             mTypeTextField.editText?.setText(it.type)
             mPriceTextField.editText?.setText(it.price.toString())
@@ -88,59 +87,6 @@ class EditActivity : AppCompatActivity() {
             mTownTextField.editText?.setText(it.town)
         }
 
-/*
-        //addTextChangedListener for mTypeTextField
-        mTypeTextField.editText?.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun afterTextChanged(p0: Editable?) {
-                if(p0?.length!! >4) {
-                    mTypeTextField.error = ""
-                    thereIsError=false
-                }
-                else{
-                    mTypeTextField.error="Enter a validate Type"
-                    thereIsError=true
-                }
-            }
-        })
-        //addTextChangedListener for mPriceTextField
-        mPriceTextField.editText?.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun afterTextChanged(p0: Editable?) {
-                if(p0?.length!! >3) {
-                    mPriceTextField.error = ""
-                    thereIsError=false
-                }
-                else{
-                    mPriceTextField.error="Enter a validate price"
-                    thereIsError=true
-                }
-            }
-        })
-        //addTextChangedListener for mSurfaceTextField
-        mSurfaceTextField.editText?.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun afterTextChanged(p0: Editable?) {
-                if(p0?.length!! >1) {
-                    mSurfaceTextField.error = ""
-                    thereIsError=false
-                }
-                else{
-                    mSurfaceTextField.error="Enter validate a surface"
-                    thereIsError=true
-                    println("Enter validate a information + in else set mSurfaceTextField")
-                }
-            }
-        })*/
         //Action mButton
         mButton.setOnClickListener{
             println("edit is cliked")
@@ -165,13 +111,30 @@ class EditActivity : AppCompatActivity() {
                 println("Enter validate a information + in buton set clicked")
             }
             else {
-                if (mArrayBitmap.size == 0) {
-                    Toast.makeText(this, "Choose at least one picture !", Toast.LENGTH_SHORT).show()
-                    println("Choose at least one picture")
+                ///DEBUT update shots
+                var size = mArrayBitmapAtEnd.size
+                println(" nombre shot "+size)
+
+                if(size==0)
+                {
+                    println("we are going to update realty sans shot"+size)
                 }
-                else{
-                    println("we are going to update realty")
-                    myViewModel.getRealtyById(idRealty).observe(this){
+                else {
+                    println("we are going to update realty and shot " + size)
+                    myViewModel.deleteAllShotOfRealty(idRealty.toInt())
+                    size--
+                    for (i in 0..size) {
+                        var description = "GeneralShot"
+                        if (i == 0) {
+                            description = "MainShot"
+                        }
+                        val shot = Shot(null, description, mArrayBitmapAtEnd[i], idRealty.toInt())
+                        myViewModel.insert(shot)
+                    }
+                }
+                 //
+
+                    myViewModel.getRealtyById(idRealty as Int).observe(this){
                         // printCurrentRealtyIntoUI(it)
                         val price = priceText.toString().toInt()
                         val surface = surfaceText.toString().toInt()
@@ -191,7 +154,6 @@ class EditActivity : AppCompatActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         intent.putExtra(KEY_EDIT_REALTY, "OK")
                         startActivity(intent)
-                    }
                 }
             }
         }
@@ -210,9 +172,9 @@ class EditActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            mArrayBitmap.clear()
-            println("After clear "+mArrayBitmap.size)
-            imageadapter.submitList(mArrayBitmap)
+            mArrayBitmapAtEnd.clear()
+          //  println("After clear "+mArrayBitmap.size)
+        imageadapter.submitList(mArrayBitmapAtEnd)
             if (data.clipData != null) {
                 var itemCount = data.clipData!!.itemCount
                 println("you have picked $itemCount Images")
@@ -220,15 +182,10 @@ class EditActivity : AppCompatActivity() {
                 itemCount--
                 for (i in 0..itemCount) {
                     // adding imageuri in array
-                    val imageuri = data.clipData?.getItemAt(i)?.uri
-                    imageuri?.let {
-                        val inputStream = contentResolver.openInputStream(imageuri)
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        val stream = ByteArrayOutputStream()
-                        //   mByteArray.add(stream.toByteArray())
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        //  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, mByteArray.si)
-                        mArrayBitmap.add(bitmap)
+                    val imageUri = data.clipData?.getItemAt(i)?.uri
+                    imageUri?.let {
+                         val bitmap = convertUriToBitmap(it,contentResolver)
+                        mArrayBitmapAtEnd.add(bitmap)
                     }
                 }
                 // setting 1st selected image into image switcher
@@ -238,23 +195,18 @@ class EditActivity : AppCompatActivity() {
             else {
                 val uri = data.data
                 uri?.let {
-                    val inputStream = contentResolver.openInputStream(uri)
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    val stream = ByteArrayOutputStream()
-                    // mByteArray.add(stream.toByteArray())
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                    mArrayBitmap.add(bitmap)
+                    val bitmap = convertUriToBitmap(it,contentResolver)
+                    mArrayBitmapAtEnd.add(bitmap)
                 }
                 Toast.makeText(this, "You picked  one Image ", Toast.LENGTH_LONG).show()
                 //mImageView.setImageURI(data.data)
             }
             //adapter.submitList(mArrayUri)
-            println("mArrayUri ${mArrayBitmap.size} ")
+            println("mArrayUri end ${mArrayBitmapAtEnd.size} ")
             mRecyclerView.background=null
-            imageadapter.submitList(mArrayBitmap)
+            imageadapter.submitList(mArrayBitmapAtEnd)
             //importante pour mette à jour les images du recyclerview !!! sinon les recyclerview continet les ancian image
             imageadapter.notifyDataSetChanged()
-
 
         } else {
             // show this if no image is selected

@@ -20,5 +20,16 @@ class ShotRepository(private val shotDao: ShotDao) {
         return shotDao.insert(shot)
     }
 
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateShot(shot:Shot) {
+        shotDao.updateShot(shot)
+    }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend  fun deleteAllShotOfRealty(id:Int){
+        shotDao.deleteAllShotOfRealty(id)
+    }
+
 
 }
