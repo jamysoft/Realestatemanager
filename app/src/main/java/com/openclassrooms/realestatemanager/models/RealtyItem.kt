@@ -1,9 +1,6 @@
 package com.openclassrooms.realestatemanager.models
 
 import android.graphics.Bitmap
-import androidx.annotation.Nullable
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 
 class RealtyItem (
                    val idRealty: Int,

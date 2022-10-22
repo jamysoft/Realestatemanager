@@ -20,8 +20,7 @@ interface RealtyDao {
     suspend fun insert(realty: Realty):Long
 
     @Update
-    fun updateRealty(Realty: Realty)
-
+    suspend fun updateRealty(Realty: Realty)
 
     @Query("UPDATE realty_table SET is_available = 0 WHERE id_realty= :id")
     suspend fun updateStatusRealty(id:Int)
@@ -35,13 +34,25 @@ interface RealtyDao {
 
    /* @Query("SELECT realty_table .id_realty,type,price,surface,number_piece,town,address,is_available,entry_date,sale_date,shot FROM  realty_table INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty")
     fun getAllRealtyItem():Flow<List<RealtyItem>>
-
     */
+
    @Query("SELECT realty_table .id_realty as idRealty,type,price,surface,number_piece as numberOfPiece,town," +
            "description_realty as description ,address,is_available as isAvailable,entry_date as entryDate" +
            ",sale_date as saleDate,shot FROM  realty_table " +
            "INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty " +
            "where description_shot=\"MainShot\"")
    fun getAllRealtyItem():Flow<List<RealtyItem>>
+
+    @Query("select * from REALTY_TABLE where surface > :minSurface and surface < :maxSurface and is_available=1")
+    fun searchBySurface(minSurface:Int ,maxSurface:Int):Flow<List<Realty>>
+
+   /* @Query("SELECT COUNT(realty_table .id_realty) as NumberShot,realty_table .id_realty as idRealty,realty_table .id_realty,type,price,surface,number_piece as numberOfPiece,town, description_realty as description ,address,is_available as isAvailable,entry_date as entryDate"
+        +",sale_date as saleDate,shot FROM  realty_table"
+               +" INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty"
+               +" GROUP BY realty_table. id_realty"
+               + " having NumberShot > :minShot  and town= :town and price> :minPrice  and price < :MaxPrice ")
+    fun searchBySecteurAndNumberShotAndPrice(minShot:Int,town:String,minPrice:Int,MaxPrice:Int):Flow<List<RealtyItem>>
+
+    */
 
 }

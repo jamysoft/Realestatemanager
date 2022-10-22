@@ -6,50 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
-    <HorizontalScrollView
-        android:id="@+id/hScrolView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/realtyShootRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="900dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <GridView
-                    android:id="@+id/gridview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:numColumns="500"
-                    android:columnWidth="200dp"
-                    android:gravity="center"
-                    tools:listitem="@layout/itempic"
-                    android:scrollbarAlwaysDrawHorizontalTrack="true"
-                    android:scrollbarAlwaysDrawVerticalTrack="true"
-                    android:scrollbars="horizontal"
-                    android:stretchMode="none"
-                    android:verticalSpacing="10dp"
-                    android:horizontalSpacing="10dp"
-                    />
-            </LinearLayout>
-        </FrameLayout>
-    </HorizontalScrollView>
+        android:visibility="visible"
+        tools:listitem="@layout/itemshot"
+        />
+    <TextView
+        android:id="@+id/available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/realtyShootRecyclerView"
+        app:layout_constraintBottom_toTopOf="@id/titleDescription"
+        android:visibility="visible"
+       android:text="Sold"
+        android:layout_marginRight="8dp"
+        android:padding="8dp"
+        android:textColor="#121111"
+        android:background="#EF0A0A"
+        android:textAlignment="center"
+        android:textSize="16dp"
+
+        />
 
     <TextView
         android:id="@+id/titleDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/hScrolView"
+        app:layout_constraintTop_toBottomOf="@id/realtyShootRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Description"
         android:layout_margin="12dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:drawableStart="@drawable/ic_baseline_description_24"
         />
@@ -71,7 +63,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Surface : "
         android:layout_margin="12dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:drawableStart="@drawable/ic_baseline_width_wide_24"
         />
@@ -84,7 +76,6 @@
         app:layout_constraintStart_toEndOf="@id/titleSurface"
         android:text="1200 m"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="4dp"
         android:textSize="16sp"
         />
 
@@ -97,7 +88,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Number of rooms : "
         android:layout_margin="12dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:drawableStart="@drawable/ic_baseline_home_24"
         />
@@ -120,7 +111,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Location : "
         android:layout_margin="12dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:drawableStart="@drawable/ic_baseline_location_on_24"
         />
@@ -131,7 +122,6 @@
         app:layout_constraintTop_toTopOf="@id/titleLocation"
         app:layout_constraintStart_toEndOf="@id/titleLocation"
         android:text="Rabat Maroc"
-        android:layout_marginTop="4dp"
         android:textSize="16sp"
         />
     <ImageView

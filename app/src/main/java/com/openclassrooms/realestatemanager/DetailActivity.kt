@@ -1,46 +1,51 @@
 package com.openclassrooms.realestatemanager
-
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.models.Realty
 import com.openclassrooms.realestatemanager.viewModels.RealStateManagerApplication
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModelFactory
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.launch
 
 class DetailActivity : AppCompatActivity() {
-    lateinit var  mImageadapter:CustomizedGalleryAdapter
-    lateinit var  mGridview: GridView
-    lateinit var  mImageView: ImageView
-    lateinit var mSurface:TextView
-    lateinit var  mLocation: TextView
-    lateinit var  mDescription: TextView
-    lateinit var mNumberOfRoom:TextView
+    private lateinit var  mImageadapter:GalleryAdapter
+    private lateinit var  mRecyclerView: RecyclerView
+    private lateinit var  mImageView: ImageView
+    private lateinit var mSurface:TextView
+    private lateinit var  mLocation: TextView
+    private lateinit var  mDescription: TextView
+    private lateinit var mNumberOfRoom:TextView
+    private lateinit var mAvailable:TextView
     private val myViewModel: RealtyViewModel by viewModels {
         RealtyViewModelFactory((application as RealStateManagerApplication).repository,(application as RealStateManagerApplication).repositoryShot)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        mGridview=findViewById(R.id.gridview)
+        mRecyclerView=findViewById(R.id.realtyShootRecyclerView)
         mImageView=findViewById(R.id.staticMapRealty)
         mLocation=findViewById(R.id.location)
         mDescription=findViewById(R.id.description)
         mNumberOfRoom=findViewById(R.id.numberOfRoom)
         mSurface=findViewById(R.id.surface)
-        //   actionBar?.setDisplayHomeAsUpEnabled(true)
-        //recuperer idRealty
+        mAvailable=findViewById(R.id.available)
+        mImageadapter= GalleryAdapter()
+        mRecyclerView.adapter=mImageadapter
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        mRecyclerView.layoutManager =layoutManager
+        mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        //recuperate idRealty
         val idRealty= intent.extras!!.get(KEY_ID_REALTY)
-        var mArrayBitmap=ArrayList<Bitmap>()
+        val mArrayBitmap=ArrayList<Bitmap>()
         //Fetch realty bitmap from datebase
         myViewModel.allShotByIdRealty(idRealty as Int).observe(this) {
             var size = it.size
@@ -48,12 +53,12 @@ class DetailActivity : AppCompatActivity() {
             for (i in 0..size) {
                 mArrayBitmap.add(it[i].shot)
             }
-            mImageadapter = CustomizedGalleryAdapter(this@DetailActivity, mArrayBitmap)
-            mGridview.adapter = mImageadapter
+           mImageadapter.submitList(mArrayBitmap)
+
         }
         myViewModel.getRealtyById(idRealty.toInt()).observe(this){
             updateUI(it)
-            var imageUri=getUriStaticMap(it.address)
+            val imageUri=getUriStaticMap(it.address)
             print("imageUri= $imageUri")
             Picasso.get()
                 .load(imageUri)
@@ -66,7 +71,13 @@ class DetailActivity : AppCompatActivity() {
         mLocation.text = it.address
         mDescription.text=it.description
         mNumberOfRoom.text=it.numberOfPiece.toString()
-        mSurface.text=it.surface.toString()
+        mSurface.text=it.surface.toString()+getString( R.string.uniteSurface)
+        if(it.isAvailable){
+            mAvailable.text = getString(R.string.availableText)
+        }
+        else{
+            mAvailable.text=getString(R.string.SoldText)
+        }
     }
 
     private fun getUriStaticMap(location:String) :String{

@@ -33,15 +33,15 @@ La date de vente du bien, s’il a été vendu ;
 data class Realty(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_realty") val idRealty: Int?,
-    val type:String,
-    val price:Int,
-    val surface:Int,
-    @ColumnInfo(name = "number_piece") val numberOfPiece:Int,
-    @ColumnInfo(name = "description_realty") val description:String,
-    val town:String,
-    val address:String,
-    @ColumnInfo(name = "is_available") val isAvailable:Boolean,
-    @ColumnInfo(name = "entry_date") val entryDate: String,
+    var type:String,
+    var price:Int,
+    var surface:Int,
+    @ColumnInfo(name = "number_piece") var numberOfPiece:Int,
+    @ColumnInfo(name = "description_realty") var description:String,
+    var town:String,
+    var address:String,
+    @ColumnInfo(name = "is_available") var isAvailable:Boolean,
+    @ColumnInfo(name = "entry_date") var entryDate: String,
     @Nullable
-    @ColumnInfo(name = "sale_date") val saleDate: String?,
-    @ColumnInfo(name = "id_agent") val idAgent: Int)
+    @ColumnInfo(name = "sale_date") var saleDate: String?,
+    @ColumnInfo(name = "id_agent") var idAgent: Int)

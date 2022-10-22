@@ -1,22 +1,21 @@
 package com.openclassrooms.realestatemanager
-
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.content.res.Resources
+import android.graphics.Color
+import android.provider.Settings.Global.getString
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.openclassrooms.realestatemanager.models.RealtyItem
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
 
@@ -27,62 +26,72 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
 
     override fun onCreateViewHolder(parent: ViewGroup,ViewType: Int):MyViewHolder {
 
-        return MyViewHolder.create(parent,myViewModel)
+        return MyViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = getItem(position)
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context,DetailActivity::class.java)
-            Toast.makeText(holder.itemView.context,"item", Toast.LENGTH_LONG).show()
             intent.putExtra(KEY_ID_REALTY,current.idRealty )
             // start detail activity
-          startActivity(holder.itemView.context,intent,null)
+           startActivity(holder.itemView.context,intent,null)
         }
 
         holder.itemView.setOnLongClickListener {
-            Toast.makeText(holder.itemView.context,"long click ${current.type}", Toast.LENGTH_LONG).show()
-            /*************/
-            val callback = object : ActionMode.Callback {
-                override fun onCreateActionMode(mode: androidx.appcompat.view.ActionMode?, menu: Menu?): Boolean {
-                    menuInflater.inflate(R.menu.menucontextuel, menu)
-                    return true
-                }
-                @SuppressLint("ResourceType")
-                override fun onPrepareActionMode(mode: androidx.appcompat.view.ActionMode?, menu: Menu?): Boolean {
-                    return false
-                }
+           // Toast.makeText(holder.itemView.context,"long click ${current.type}", Toast.LENGTH_LONG).show()
+            val  callback=showTextualActionBar(holder.itemView.context,current)
+            val actionMode =  ( it.context as AppCompatActivity).startSupportActionMode(callback)
+            actionMode?.title =  "${current.type}-${current.town} "
+            true
+        }
+        holder.bind(current)
+    }
 
-                override fun onActionItemClicked(mode: androidx.appcompat.view.ActionMode?, item: MenuItem?): Boolean {
-                    Intent(holder.itemView.context,AddActivity::class.java)
-                    return when (item?.itemId) {
-                        R.id.delete -> {
-                            myViewModel.deleteByIdRealty(current.idRealty)
-                            Toast.makeText( holder.itemView.context, "delete ${current.toString()}", Toast.LENGTH_SHORT).show()
-                            true
-                        }
-                        R.id.makeItSold -> {
-                            Toast.makeText(holder.itemView.context, "Sold click detected", Toast.LENGTH_SHORT).show()
-                                myViewModel.updateStatusRealty(current.idRealty)
-                            true
-                        }
-                        else -> false
+    private fun showTextualActionBar(context: Context,current:RealtyItem): ActionMode.Callback {
+
+        val callback = object : ActionMode.Callback {
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                menuInflater.inflate(R.menu.menucontextuel, menu)
+                return true
+            }
+            @SuppressLint("ResourceType")
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+
+                return when (item?.itemId) {
+                    R.id.delete -> {
+                        myViewModel.deleteByIdRealty(current.idRealty)
+                        Toast.makeText( context, "delete $current", Toast.LENGTH_SHORT).show()
+                        true
                     }
-                }
-
-                override fun onDestroyActionMode(mode: androidx.appcompat.view.ActionMode?) {
-
+                    R.id.makeItSold -> {
+                        Toast.makeText(context, "Sold click detected", Toast.LENGTH_SHORT).show()
+                        myViewModel.updateStatusRealty(current.idRealty)
+                        true
+                    }
+                    R.id.upDate -> {
+                        val intent=Intent(context,EditActivity::class.java)
+                        Toast.makeText(context, "update click detected", Toast.LENGTH_SHORT).show()
+                        intent.putExtra(KEY_EDIT_REALTY,current.idRealty )
+                        // start detail activity
+                        startActivity(context,intent,null)
+                        true
+                    }
+                    else -> false
                 }
             }
 
-            /*************/
-            val actionMode =  ( it.context as AppCompatActivity).startSupportActionMode(callback)
-          //  actionMode?.title =  "${current.idRealty} is selected"
+            override fun onDestroyActionMode(mode: ActionMode?) {
 
-            true
+            }
         }
-        holder.bind(current,myViewModel)
+        return callback
     }
+
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
       private val realtyShot: ImageView = itemView.findViewById(R.id.realtyShot)
@@ -90,36 +99,25 @@ class ListRealtyAdapter(val menuInflater: MenuInflater, val myViewModel: RealtyV
         private val realtyAvailable: TextView = itemView.findViewById(R.id.realtyAvailable)
         private val realtyPrice: TextView = itemView.findViewById(R.id.realtyPrice)
         private val realtyType: TextView = itemView.findViewById(R.id.realtyType)
-        private val updateButton: Button = itemView.findViewById(R.id.updateButton)
 
-         fun bind(currentRealty: RealtyItem, myViewModel: RealtyViewModel) {
-            /*****  CONVERT Drawable to  bitmap ****/
-
-            var bitmap = BitmapFactory.decodeResource(itemView.context.getResources(), R.drawable.belleappart)
+         fun bind(currentRealty: RealtyItem) {
              realtyShot.setImageBitmap(currentRealty.shot)
-            realtyTown.setText(currentRealty.town)
-            realtyPrice.setText("$ ${currentRealty.price}")
-            realtyType.setText(currentRealty.type)
+            realtyTown.text=currentRealty.town
+            realtyPrice.text=currentRealty.price.toString()
+            realtyType.text=currentRealty.type
             if(currentRealty.isAvailable){
-                realtyAvailable.setText("AVAILABLE")
+                realtyAvailable.text = itemView.context.getString(R.string.availableText)
+                realtyAvailable.setTextColor(Color.parseColor("#38A563"))
+                realtyAvailable.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context,R.drawable.ic_baseline_info_24), null, null, null)
             }
             else{
-                realtyAvailable.setText("VENDU")
+                realtyAvailable.text= itemView.context.getString(R.string.SoldText)
+                realtyAvailable.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context,R.drawable.ic_baseline_info_red_24), null, null, null)
             }
 
-            updateButton.setOnClickListener {
-                println("update")
-             val intent = Intent(itemView.context,DetailActivity::class.java)
-                intent.putExtra(KEY_ID_REALTY,5 )
-                // start detail activity
-                startActivity(itemView.context,intent,null)
-            }
         }
         companion object {
-            fun create(
-                parent: ViewGroup,
-                myViewModel: RealtyViewModel,
-            ): MyViewHolder {
+            fun create(parent: ViewGroup ): MyViewHolder {
                 val view: View = LayoutInflater.from(parent.context).inflate(R.layout.itemlistrealty, parent, false)
                 return MyViewHolder(view)
             }

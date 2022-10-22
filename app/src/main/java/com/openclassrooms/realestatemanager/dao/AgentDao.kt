@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.openclassrooms.realestatemanager.models.Agent
-import com.openclassrooms.realestatemanager.models.Realty
 import kotlinx.coroutines.flow.Flow
+
 @Dao
 interface AgentDao {
     // The flow always holds/caches latest version of data. Notifies its observers when the

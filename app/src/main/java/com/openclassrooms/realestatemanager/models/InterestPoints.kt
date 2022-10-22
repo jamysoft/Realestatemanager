@@ -13,6 +13,4 @@ data class InterestPoints(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_Points") var idPoints: Int?,
     @ColumnInfo(name = "name_point") var namePoint:String,
-   ) {
-    constructor(namePoint: String):this(null,namePoint )
-}
+   )

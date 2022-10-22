@@ -9,4 +9,7 @@
     <string name="adresslabel">Adress</string>
     <string name="add">add</string>
     <string name="content_description_add">add</string>
+    <string name="availableText">AVAILABLE</string>
+    <string name="SoldText">Sold</string>
+    <string name="uniteSurface">m2</string>
 </resources>

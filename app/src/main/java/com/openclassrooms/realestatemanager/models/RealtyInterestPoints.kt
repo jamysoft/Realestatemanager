@@ -8,6 +8,4 @@ data class RealtyInterestPoints(
     @PrimaryKey(autoGenerate = true) var id_realty_points: Int?,
     @ColumnInfo(name = "id_point") var idPoint: Int,
     @ColumnInfo(name="id_realty") var idRealty:Int
-) {
-    constructor(idPoint: Int,idRealty: Int):this(null,idPoint,idPoint)
-}
+)

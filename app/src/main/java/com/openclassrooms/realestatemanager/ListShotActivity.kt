@@ -1,11 +1,10 @@
 package com.openclassrooms.realestatemanager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.viewModels.RealStateManagerApplication
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModelFactory

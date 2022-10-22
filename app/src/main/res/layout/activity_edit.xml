@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
+    tools:context=".EditActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/realtyShootRecyclerView"
+        android:id="@+id/realtyShootRecyclerViewEdit"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,11 +15,10 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="visible"
         tools:listitem="@layout/itemshot"
-        android:background="@drawable/belleappart"
         />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/myToolbar"
+        android:id="@+id/myToolbarEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,25 +26,25 @@
         app:layout_scrollFlags="scroll|enterAlways"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addShot"
+        android:id="@+id/editShot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_add_a_photo_24"
         android:backgroundTint="#00BCD4"
         android:text="Add shoot"
-        app:layout_constraintBottom_toTopOf="@id/typeTextField"
-        app:layout_constraintEnd_toEndOf="@id/realtyShootRecyclerView"
+        app:layout_constraintBottom_toTopOf="@id/typeTextFieldEdit"
+        app:layout_constraintEnd_toEndOf="@id/realtyShootRecyclerViewEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/typeTextField"
+        android:id="@+id/typeTextFieldEdit"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:hint="@string/typelabel"
-        app:layout_constraintTop_toBottomOf="@id/realtyShootRecyclerView"
+        app:layout_constraintTop_toBottomOf="@id/realtyShootRecyclerViewEdit"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="12dp"
@@ -59,14 +58,13 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/priceTextField"
+        android:id="@+id/priceTextFieldEdit"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:hint="@string/pricelabel"
-        app:layout_constraintStart_toEndOf="@id/typeTextField"
-        app:layout_constraintTop_toTopOf="@id/typeTextField"
+        app:layout_constraintStart_toEndOf="@id/typeTextFieldEdit"
+        app:layout_constraintTop_toTopOf="@id/typeTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:errorEnabled="true"
@@ -80,12 +78,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/surfaceTextField"
+        android:id="@+id/surfaceTextFieldEdit"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:hint="@string/surfacelabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priceTextField"
+        app:layout_constraintTop_toBottomOf="@id/priceTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:errorEnabled="true"
@@ -99,12 +97,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/numberOfPieceTextField"
+        android:id="@+id/numberOfPieceTextFieldEdit"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:hint="@string/numberlabel"
-        app:layout_constraintStart_toEndOf="@id/surfaceTextField"
-        app:layout_constraintTop_toTopOf="@id/surfaceTextField"
+        app:layout_constraintStart_toEndOf="@id/surfaceTextFieldEdit"
+        app:layout_constraintTop_toTopOf="@id/surfaceTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:errorEnabled="true"
@@ -113,18 +111,16 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            />
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/townTextField"
+        android:id="@+id/townTextFieldEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/townlabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/descriptionTextField"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:errorEnabled="true"
@@ -138,12 +134,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/adressTextField"
+        android:id="@+id/adressTextFieldEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/adresslabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/townTextField"
+        app:layout_constraintTop_toBottomOf="@id/townTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:errorEnabled="true"
@@ -157,12 +153,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/descriptionTextField"
+        android:id="@+id/descriptionTextFieldEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/descriptiolabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numberOfPieceTextField"
+        app:layout_constraintTop_toBottomOf="@id/numberOfPieceTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         app:errorEnabled="true"
@@ -176,14 +172,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/editButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add realty"
+        android:text="Edit realty"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adressTextField"
+        app:layout_constraintTop_toBottomOf="@id/adressTextFieldEdit"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:drawableLeft="@drawable/ic_edit_24"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

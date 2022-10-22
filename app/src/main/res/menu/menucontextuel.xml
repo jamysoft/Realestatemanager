@@ -13,4 +13,10 @@
         android:title="@string/makeitsolde"
         android:contentDescription="@string/content_description_search"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/upDate"
+        android:icon="@drawable/ic_edit_24"
+        android:title="@string/makeitsolde"
+        android:contentDescription="@string/content_description_search"
+        app:showAsAction="ifRoom" />
 </menu>
