@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.widget.Button
@@ -21,63 +20,69 @@ import com.openclassrooms.realestatemanager.utils.Utils.Companion.convertUriToBi
 import com.openclassrooms.realestatemanager.viewModels.RealStateManagerApplication
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModelFactory
-import java.io.ByteArrayOutputStream
+
 const val KEY_EDIT_REALTY = "key_edit_realty"
+
 class EditActivity : AppCompatActivity() {
-    private lateinit var  mToolbar: Toolbar
-    private  lateinit var  mTypeTextField: TextInputLayout
-    private lateinit var  mPriceTextField: TextInputLayout
-    private lateinit var  mSurfaceTextField: TextInputLayout
-    private lateinit var  mNumberOfPieceTextField: TextInputLayout
-    private lateinit var  mDescriptionTextField: TextInputLayout
-    private lateinit var  mTownTextField: TextInputLayout
-    private lateinit var  mAddressTextField: TextInputLayout
-    private lateinit var  mButton: Button
-    private lateinit var mFloatingActionButton:FloatingActionButton
-    private var mArrayBitmapAtFirst: MutableList<Bitmap> = ArrayList()
+    private lateinit var mToolbar: Toolbar
+    private lateinit var mTypeTextField: TextInputLayout
+    private lateinit var mPriceTextField: TextInputLayout
+    private lateinit var mSurfaceTextField: TextInputLayout
+    private lateinit var mNumberOfPieceTextField: TextInputLayout
+    private lateinit var mDescriptionTextField: TextInputLayout
+    private lateinit var mTownTextField: TextInputLayout
+    private lateinit var mAddressTextField: TextInputLayout
+    private lateinit var mButton: Button
+    private lateinit var mFloatingActionButton: FloatingActionButton
+    private var mArrayBitmapFromDatabase: MutableList<Bitmap> = ArrayList()
     private var mArrayBitmapAtEnd: MutableList<Bitmap> = ArrayList()
-    private lateinit var  imageadapter:GalleryAdapter
-    private lateinit var  mRecyclerView: RecyclerView
-    lateinit var idRealty:Integer
+    private lateinit var imageadapter: GalleryAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    lateinit var idRealty: Integer
 
 
     private val myViewModel: RealtyViewModel by viewModels {
-        RealtyViewModelFactory((application as RealStateManagerApplication).repository,(application as RealStateManagerApplication).repositoryShot)
+        RealtyViewModelFactory(
+            (application as RealStateManagerApplication).repository,
+            (application as RealStateManagerApplication).repositoryShot
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
-        mToolbar=findViewById(R.id.myToolbarEdit)
-        mTypeTextField=findViewById(R.id.typeTextFieldEdit)
-        mPriceTextField=findViewById(R.id.priceTextFieldEdit)
-        mSurfaceTextField=findViewById(R.id.surfaceTextFieldEdit)
-        mNumberOfPieceTextField=findViewById(R.id.numberOfPieceTextFieldEdit)
-        mDescriptionTextField=findViewById(R.id.descriptionTextFieldEdit)
-        mTownTextField=findViewById(R.id.townTextFieldEdit)
-        mAddressTextField=findViewById(R.id.adressTextFieldEdit)
-        mButton=findViewById(R.id.editButton)
-        mFloatingActionButton=findViewById(R.id.editShot)
-        mRecyclerView=findViewById(R.id.realtyShootRecyclerViewEdit)
+        mToolbar = findViewById(R.id.myToolbarEdit)
+        mTypeTextField = findViewById(R.id.typeTextFieldEdit)
+        mPriceTextField = findViewById(R.id.priceTextFieldEdit)
+        mSurfaceTextField = findViewById(R.id.surfaceTextFieldEdit)
+        mNumberOfPieceTextField = findViewById(R.id.numberOfPieceTextFieldEdit)
+        mDescriptionTextField = findViewById(R.id.descriptionTextFieldEdit)
+        mTownTextField = findViewById(R.id.townTextFieldEdit)
+        mAddressTextField = findViewById(R.id.adressTextFieldEdit)
+        mButton = findViewById(R.id.editButton)
+        mFloatingActionButton = findViewById(R.id.editShot)
+        mRecyclerView = findViewById(R.id.realtyShootRecyclerViewEdit)
 
         setSupportActionBar(mToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        var  thereIsError=false
+        var thereIsError = false
         //recuperate idRealty From intent
-        idRealty= intent.extras!!.get(KEY_EDIT_REALTY) as Integer
-        imageadapter=GalleryAdapter()
-        mRecyclerView.adapter=imageadapter
+        idRealty = intent.extras!!.get(KEY_EDIT_REALTY) as Integer
+        imageadapter = GalleryAdapter()
+        mRecyclerView.adapter = imageadapter
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        mRecyclerView.layoutManager =layoutManager
+        mRecyclerView.layoutManager = layoutManager
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        myViewModel.allShotByIdRealty(idRealty as Int).observe(this){
-            mArrayBitmapAtFirst=convertListShotToArrayBitmap(it)
-            imageadapter.submitList(mArrayBitmapAtFirst)
+        myViewModel.allShotByIdRealty(idRealty as Int).observe(this) {
+            mArrayBitmapFromDatabase = convertListShotToArrayBitmap(it)
+            if (mArrayBitmapAtEnd.size == 0) {
+                imageadapter.submitList(mArrayBitmapFromDatabase)
+            }
         }
 
-        myViewModel.getRealtyById(idRealty as Int).observe(this){
-           // printCurrentRealtyIntoUI(it)
+        myViewModel.getRealtyById(idRealty as Int).observe(this) {
+            // printCurrentRealtyIntoUI(it)
             mTypeTextField.editText?.setText(it.type)
             mPriceTextField.editText?.setText(it.price.toString())
             mSurfaceTextField.editText?.setText(it.surface.toString())
@@ -88,38 +93,38 @@ class EditActivity : AppCompatActivity() {
         }
 
         //Action mButton
-        mButton.setOnClickListener{
+        mButton.setOnClickListener {
             println("edit is cliked")
             Toast.makeText(this, "EDIT button is clicked ", Toast.LENGTH_SHORT).show()
-            thereIsError=false
+            thereIsError = false
             // Get. input text
             val typeText: Editable? = mTypeTextField.editText?.text
-            val priceText:Editable? = mPriceTextField.editText?.text
-            val surfaceText:Editable ?= mSurfaceTextField.editText?.text
-            val numberOfPieceText:Editable? = mNumberOfPieceTextField.editText?.text
-            val descriptionText:Editable? = mDescriptionTextField.editText?.text
-            val adressText:Editable? = mAddressTextField.editText?.text
+            val priceText: Editable? = mPriceTextField.editText?.text
+            val surfaceText: Editable? = mSurfaceTextField.editText?.text
+            val numberOfPieceText: Editable? = mNumberOfPieceTextField.editText?.text
+            val descriptionText: Editable? = mDescriptionTextField.editText?.text
+            val adressText: Editable? = mAddressTextField.editText?.text
             val townText: Editable? = mTownTextField.editText?.text
-            if(typeText.toString().isEmpty()|| priceText.toString().isEmpty() || surfaceText.toString().isEmpty() ||
-                numberOfPieceText.toString().isEmpty() || descriptionText.toString().isEmpty()|| adressText.toString().isEmpty()||
-                townText.toString().isEmpty()) {
+            if (typeText.toString().isEmpty() || priceText.toString()
+                    .isEmpty() || surfaceText.toString().isEmpty() ||
+                numberOfPieceText.toString().isEmpty() || descriptionText.toString()
+                    .isEmpty() || adressText.toString().isEmpty() ||
+                townText.toString().isEmpty()
+            ) {
                 println("Enter validate a information + in if in set clicked")
-                thereIsError=true
+                thereIsError = true
             }
-            if(thereIsError){
+            if (thereIsError) {
                 Toast.makeText(this, "Enter validate a information", Toast.LENGTH_SHORT).show()
                 println("Enter validate a information + in buton set clicked")
-            }
-            else {
+            } else {
                 ///DEBUT update shots
                 var size = mArrayBitmapAtEnd.size
-                println(" nombre shot "+size)
+                println(" nombre shot " + size)
 
-                if(size==0)
-                {
-                    println("we are going to update realty sans shot"+size)
-                }
-                else {
+                if (size == 0) {
+                    println("we are going to update realty sans shot" + size)
+                } else {
                     println("we are going to update realty and shot " + size)
                     myViewModel.deleteAllShotOfRealty(idRealty.toInt())
                     size--
@@ -132,33 +137,33 @@ class EditActivity : AppCompatActivity() {
                         myViewModel.insert(shot)
                     }
                 }
-                 //
+                //
 
-                    myViewModel.getRealtyById(idRealty as Int).observe(this){
-                        // printCurrentRealtyIntoUI(it)
-                        val price = priceText.toString().toInt()
-                        val surface = surfaceText.toString().toInt()
-                        val numberOfPiece = numberOfPieceText.toString().toInt()
-                        val description=descriptionText.toString()
-                        val type=typeText.toString()
-                        val town=townText.toString()
-                        val address=adressText.toString()
-                        it.type= type
-                        it.price=price
-                        it.surface=surface
-                        it.numberOfPiece=numberOfPiece
-                        it.description=description
-                        it.town=town
-                        it.address=address
-                        myViewModel.updateRealty(it)
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra(KEY_EDIT_REALTY, "OK")
-                        startActivity(intent)
+                myViewModel.getRealtyById(idRealty as Int).observe(this) {
+                    // printCurrentRealtyIntoUI(it)
+                    val price = priceText.toString().toInt()
+                    val surface = surfaceText.toString().toInt()
+                    val numberOfPiece = numberOfPieceText.toString().toInt()
+                    val description = descriptionText.toString()
+                    val type = typeText.toString()
+                    val town = townText.toString()
+                    val address = adressText.toString()
+                    it.type = type
+                    it.price = price
+                    it.surface = surface
+                    it.numberOfPiece = numberOfPiece
+                    it.description = description
+                    it.town = town
+                    it.address = address
+                    myViewModel.updateRealty(it)
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra(KEY_EDIT_REALTY, "OK")
+                    startActivity(intent)
                 }
             }
         }
 
-        mFloatingActionButton.setOnClickListener{
+        mFloatingActionButton.setOnClickListener {
             // mArrayBitmap.clear()
             val intentImg = Intent(Intent.ACTION_GET_CONTENT)
             // setting type to select to be image
@@ -173,8 +178,8 @@ class EditActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
             mArrayBitmapAtEnd.clear()
-          //  println("After clear "+mArrayBitmap.size)
-        imageadapter.submitList(mArrayBitmapAtEnd)
+            //  println("After clear "+mArrayBitmap.size)
+            imageadapter.submitList(mArrayBitmapAtEnd)
             if (data.clipData != null) {
                 var itemCount = data.clipData!!.itemCount
                 println("you have picked $itemCount Images")
@@ -184,7 +189,7 @@ class EditActivity : AppCompatActivity() {
                     // adding imageuri in array
                     val imageUri = data.clipData?.getItemAt(i)?.uri
                     imageUri?.let {
-                         val bitmap = convertUriToBitmap(it,contentResolver)
+                        val bitmap = convertUriToBitmap(it, contentResolver)
                         mArrayBitmapAtEnd.add(bitmap)
                     }
                 }
@@ -195,7 +200,7 @@ class EditActivity : AppCompatActivity() {
             else {
                 val uri = data.data
                 uri?.let {
-                    val bitmap = convertUriToBitmap(it,contentResolver)
+                    val bitmap = convertUriToBitmap(it, contentResolver)
                     mArrayBitmapAtEnd.add(bitmap)
                 }
                 Toast.makeText(this, "You picked  one Image ", Toast.LENGTH_LONG).show()
@@ -203,7 +208,7 @@ class EditActivity : AppCompatActivity() {
             }
             //adapter.submitList(mArrayUri)
             println("mArrayUri end ${mArrayBitmapAtEnd.size} ")
-            mRecyclerView.background=null
+            mRecyclerView.background = null
             imageadapter.submitList(mArrayBitmapAtEnd)
             //importante pour mette à jour les images du recyclerview !!! sinon les recyclerview continet les ancian image
             imageadapter.notifyDataSetChanged()

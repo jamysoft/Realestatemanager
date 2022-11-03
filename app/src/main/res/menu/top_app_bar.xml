@@ -14,7 +14,11 @@
         android:title="@string/search"
         android:contentDescription="@string/content_description_search"
         app:showAsAction="ifRoom" />
-
-
+    <item
+        android:id="@+id/estimate"
+        android:icon="@drawable/ic_baseline_calculate_24"
+        android:title="@string/estimate"
+        android:contentDescription="@string/content_description_search"
+        app:showAsAction="ifRoom" />
 
 </menu>

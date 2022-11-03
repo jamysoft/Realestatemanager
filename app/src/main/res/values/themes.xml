@@ -44,11 +44,36 @@
         <item name="actionModeStyle">@style/myModeStyle</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="myModeStyle" parent="@style/Widget.AppCompat.ActionMode">
         <item name="background">@color/teal_700</item>
-
     </style>
 
+    <!-- personaliser Slider -->
+    <style name="Theme.Realestatemanage" parent="Theme.Realestatemanager.MyTheme">
+        <item name="sliderStyle">@style/Widget.App.Slider</item>
+    </style>
+
+    <style name="Widget.App.Slider" parent="Widget.MaterialComponents.Slider">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Slider</item>
+        <item name="labelStyle">@style/Widget.App.Tooltip</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Slider" parent="">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorOnPrimary">#DA0335</item>
+        <item name="colorOnSurface">#DA034E</item>
+    </style>
+
+    <style name="Widget.App.Tooltip" parent="Widget.MaterialComponents.Tooltip">
+        <item name="android:textAppearance">@style/TextAppearance.App.Tooltip</item>
+        <item name="backgroundTint">@color/purple_500</item>
+    </style>
+
+    <style name="TextAppearance.App.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 
 
 </resources>

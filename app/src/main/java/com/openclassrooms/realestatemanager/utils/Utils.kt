@@ -6,24 +6,18 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.net.wifi.WifiManager
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ActionMode
-import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.models.Shot
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class Utils{
+abstract class Utils {
     companion object {
         fun convertDollarToEuro(dollars: Int): Int {
             return Math.round(dollars * 0.812).toInt()
         }
-
 
         /**
          * Conversion de la date d'aujourd'hui en un format plus approprié
@@ -31,7 +25,7 @@ abstract class Utils{
          * @return
          */
         fun getTodayDate(): String? {
-            val dateFormat: DateFormat = SimpleDateFormat("yyyy/MM/dd")
+            val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             return dateFormat.format(Date())
         }
 
@@ -47,20 +41,21 @@ abstract class Utils{
         }
 
         fun integerToString(number: Integer): String {
-            return ""
+            return number.toString()
         }
 
 
-    fun convertListShotToArrayBitmap(listShot:List<Shot>): ArrayList<Bitmap> {
-        var arrayBitmap=ArrayList<Bitmap>()
-        var size=listShot.size
-        size--
-        for(i in 0..size){
-            arrayBitmap.add(listShot.get(i).shot)
+        fun convertListShotToArrayBitmap(listShot: List<Shot>): ArrayList<Bitmap> {
+            var arrayBitmap = ArrayList<Bitmap>()
+            var size = listShot.size
+            size--
+            for (i in 0..size) {
+                arrayBitmap.add(listShot.get(i).shot)
+            }
+            return arrayBitmap
         }
-        return arrayBitmap
-    }
-        fun convertUriToBitmap(uri:Uri,contentResolver:ContentResolver): Bitmap {
+
+        fun convertUriToBitmap(uri: Uri, contentResolver: ContentResolver): Bitmap {
             val inputStream = contentResolver.openInputStream(uri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
             val stream = ByteArrayOutputStream()
@@ -68,6 +63,10 @@ abstract class Utils{
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             return bitmap
 
+        }
+        fun arrondiNumber(number:Float):String{
+            val df = DecimalFormat("0.##")
+            return df.format(number)
         }
 
 

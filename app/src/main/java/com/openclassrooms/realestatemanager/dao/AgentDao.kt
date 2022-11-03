@@ -15,7 +15,7 @@ interface AgentDao {
     fun getAllAgent(): Flow<List<Agent>>
 
     @Query("SELECT * FROM agent_table where id_agent = :id_agent")
-    fun getAgentById(id_agent:Int): Flow<Agent>
+    fun getAgentById(id_agent: Int): Flow<Agent>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(agent: Agent)
@@ -24,5 +24,5 @@ interface AgentDao {
     suspend fun deleteAllAgent()
 
     @Query("DELETE FROM agent_table where id_agent = :id_agent")
-    suspend fun deleteAgentById(id_agent:Int)
+    suspend fun deleteAgentById(id_agent: Int)
 }

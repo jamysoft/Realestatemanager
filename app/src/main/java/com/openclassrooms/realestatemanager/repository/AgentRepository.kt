@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package com.openclassrooms.realestatemanager.repository
+
 import androidx.annotation.WorkerThread
 import com.openclassrooms.realestatemanager.dao.AgentDao
 import com.openclassrooms.realestatemanager.models.Agent
@@ -23,9 +24,9 @@ import kotlinx.coroutines.flow.Flow
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
- class AgentRepository(private val agentDao: AgentDao ){
+class AgentRepository(private val agentDao: AgentDao) {
 
-    val getAllAgent:Flow<List<Agent>> = agentDao.getAllAgent()
+    val getAllAgent: Flow<List<Agent>> = agentDao.getAllAgent()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

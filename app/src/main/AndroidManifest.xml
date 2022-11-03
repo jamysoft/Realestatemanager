@@ -26,15 +26,37 @@
         tools:ignore="MissingClass"
         tools:targetApi="31">
         <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="Maps Real State"
+            android:parentActivityName=".MainActivity"
+            />
+        <activity
+            android:name=".SimulationActivity"
+            android:exported="false"
+            android:label="Simulation"
+            android:parentActivityName=".MainActivity" />
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBG86SUW6eSNtqTIcNZLfyCMdWjTKKoUQo" />
+
+        <activity
             android:name=".EditActivity"
             android:exported="false"
             android:label=""
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.Realestatemanager.MyTheme"
-            />
-        <activity
-            android:name=".ListShotActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.Realestatemanager.MyTheme" />
         <activity
             android:name=".AddActivity"
             android:exported="false"

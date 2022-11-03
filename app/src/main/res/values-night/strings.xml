@@ -12,4 +12,12 @@
     <string name="availableText">AVAILABLE</string>
     <string name="SoldText">Sold</string>
     <string name="uniteSurface">m2</string>
+    <string name="amount">Le montant emprunté en €</string>
+    <string name="duration">La durée de l’emprunt en année :</string>
+    <string name="aport">L\'apport de votre pret en €</string>
+    <string name="taux">Taux d\'intéret</string>
+    <string name="monthlyAmount">Votre mensulatité sera de : </string>
+    <string name="estimate">estimate monthly payement</string>
+    <string name="money">€</string>
+
 </resources>

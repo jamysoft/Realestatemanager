@@ -1,4 +1,5 @@
 package com.openclassrooms.realestatemanager
+
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
@@ -14,18 +15,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 
-class GalleryAdapter : ListAdapter<Bitmap,GalleryAdapter.MyViewHolder>(GALLERY_COMPARATOR) {
+class GalleryAdapter : ListAdapter<Bitmap, GalleryAdapter.MyViewHolder>(GALLERY_COMPARATOR) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-       return MyViewHolder.create(parent)
+        return MyViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = getItem(position)
-        holder.itemView.setOnClickListener{
-                showDialog(it.context,current)
-         println("clique photo$position")
+        holder.itemView.setOnClickListener {
+            showDialog(it.context, current)
+            println("clique photo$position")
         }
         holder?.bind(current)
 
@@ -36,13 +37,16 @@ class GalleryAdapter : ListAdapter<Bitmap,GalleryAdapter.MyViewHolder>(GALLERY_C
         fun bind(current: Bitmap) {
             realtyShot.setImageBitmap(current)
         }
+
         companion object {
-            fun create(parent: ViewGroup ): MyViewHolder {
-                val view: View = LayoutInflater.from(parent.context).inflate(R.layout.itemshot, parent, false)
+            fun create(parent: ViewGroup): MyViewHolder {
+                val view: View =
+                    LayoutInflater.from(parent.context).inflate(R.layout.itemshot, parent, false)
                 return MyViewHolder(view)
             }
         }
     }
+
     companion object {
         private val GALLERY_COMPARATOR = object : DiffUtil.ItemCallback<Bitmap>() {
             override fun areItemsTheSame(oldItem: Bitmap, newItem: Bitmap): Boolean {
@@ -54,6 +58,7 @@ class GalleryAdapter : ListAdapter<Bitmap,GalleryAdapter.MyViewHolder>(GALLERY_C
             }
         }
     }
+
     private fun showDialog(context: Context, current: Bitmap) {
         // custom dialog
         val dialog = Dialog(context)
@@ -61,17 +66,17 @@ class GalleryAdapter : ListAdapter<Bitmap,GalleryAdapter.MyViewHolder>(GALLERY_C
 
         //set the custom dialog components - text, image and button
         val close = dialog.findViewById(R.id.btnClose) as ImageButton
-        val imageView=dialog.findViewById(R.id.imageview) as ImageView
+        val imageView = dialog.findViewById(R.id.imageview) as ImageView
         imageView.setImageBitmap(current)
         // Close Button
-          close.setOnClickListener {
-          dialog.dismiss()
-        //TODO Close button action
-    }
+        close.setOnClickListener {
+            dialog.dismiss()
+            //TODO Close button action
+        }
 
-    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    dialog.show()
-}
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
 
 }
 

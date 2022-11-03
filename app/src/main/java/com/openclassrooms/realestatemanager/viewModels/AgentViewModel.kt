@@ -1,10 +1,8 @@
-
 package com.openclassrooms.realestatemanager.viewModels
+
 import androidx.lifecycle.*
 import com.openclassrooms.realestatemanager.models.Agent
-import com.openclassrooms.realestatemanager.models.Realty
 import com.openclassrooms.realestatemanager.repository.AgentRepository
-import com.openclassrooms.realestatemanager.repository.RealtyRepository
 import kotlinx.coroutines.launch
 
 /**
@@ -28,7 +26,7 @@ class AgentViewModel(private val repository: AgentRepository) : ViewModel() {
 //OK pour la version '1.4.1'
 //CA MARCHE PAS Avec version '1.5.1 '
 //
-class AgentViewModelFactory(private val repository: AgentRepository) : ViewModelProvider .Factory{
+class AgentViewModelFactory(private val repository: AgentRepository) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AgentViewModel::class.java)) {

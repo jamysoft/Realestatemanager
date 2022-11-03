@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 package com.openclassrooms.realestatemanager.repository
+
 import androidx.annotation.WorkerThread
-import androidx.room.Query
 import com.openclassrooms.realestatemanager.dao.RealtyDao
 import com.openclassrooms.realestatemanager.models.Realty
 import com.openclassrooms.realestatemanager.models.RealtyItem
-import com.openclassrooms.realestatemanager.models.Shot
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
- class RealtyRepository(private val realtyDao: RealtyDao) {
+class RealtyRepository(private val realtyDao: RealtyDao) {
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
@@ -38,29 +37,41 @@ import kotlinx.coroutines.flow.Flow
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(realty: Realty):Long{
-         return realtyDao.insert(realty)
+    suspend fun insert(realty: Realty): Long {
+        return realtyDao.insert(realty)
     }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(id: Int) {
         realtyDao.deleteRealtyById(id)
     }
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun updateRealty(realty:Realty) {
-        realtyDao.updateRealty(realty)
-    }
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun updateStatusRealty(id:Int) {
-        realtyDao.updateStatusRealty(id)
-    }
-    val  getAllRealtyItem:Flow<List<RealtyItem>> = realtyDao.getAllRealtyItem()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun getRealtyById(id:Int): Flow<Realty> = realtyDao.getRealtyById(id)
+    suspend fun updateRealty(realty: Realty) {
+        realtyDao.updateRealty(realty)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateStatusRealty(id: Int) {
+        realtyDao.updateStatusRealty(id)
+    }
+
+    val getAllRealtyItem: Flow<List<RealtyItem>> = realtyDao.getAllRealtyItem()
+    val getAllAvailableRealtyItem: Flow<List<RealtyItem>> = realtyDao.getAllAvailableRealtyItem()
+    fun getRealtyBySurfaceAndSiniority(
+        seniority: Int,
+        isAvailable: Int,
+        minSurface: Int,
+        maxSurface: Int
+    ): Flow<List<RealtyItem>> =
+        realtyDao.getRealtyBySurfaceAndSiniority(seniority, isAvailable, minSurface, maxSurface)
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun getRealtyById(id: Int): Flow<Realty> = realtyDao.getRealtyById(id)
 
 
 }
