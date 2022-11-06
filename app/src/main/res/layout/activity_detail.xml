@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/realtyShootRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/height_realty_shoot_RecyclerView_detail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
         android:textColor="#121111"
         android:background="#EF0A0A"
         android:textAlignment="center"
-        android:textSize="16dp"
+        android:textSize="@dimen/text_size"
 
         />
 
@@ -42,9 +42,11 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Description"
         android:layout_margin="12dp"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold"
-        android:drawableStart="@drawable/ic_baseline_description_24" />
+        android:drawableStart="@drawable/ic_baseline_description_24"
+        android:drawablePadding="12dp"
+        />
 
     <TextView
         android:id="@+id/description"
@@ -54,7 +56,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Description"
         android:layout_margin="12dp"
-        android:textSize="16sp" />
+        android:textSize="@dimen/text_size" />
 
     <TextView
         android:id="@+id/titleSurface"
@@ -64,8 +66,9 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Surface : "
         android:layout_margin="12dp"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold"
+        android:drawablePadding="12dp"
         android:drawableStart="@drawable/ic_baseline_width_wide_24" />
 
     <TextView
@@ -76,7 +79,7 @@
         app:layout_constraintStart_toEndOf="@id/titleSurface"
         android:text="1200 m"
         android:layout_marginLeft="20dp"
-        android:textSize="16sp" />
+        android:textSize="@dimen/text_size" />
 
 
     <TextView
@@ -87,9 +90,10 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Number of rooms : "
         android:layout_margin="12dp"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold"
-        android:drawableStart="@drawable/ic_baseline_home_24" />
+        android:drawablePadding="12dp"
+        android:drawableStart="@drawable/ic_baseline_bedroom_child_24" />
 
     <TextView
         android:id="@+id/numberOfRoom"
@@ -100,7 +104,7 @@
         android:text=" 5"
         android:layout_marginTop="4dp"
         android:layout_marginLeft="20dp"
-        android:textSize="16sp" />
+        android:textSize="@dimen/text_size" />
 
     <TextView
         android:id="@+id/titleLocation"
@@ -110,8 +114,9 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Location : "
         android:layout_margin="12dp"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold"
+        android:drawablePadding="12dp"
         android:drawableStart="@drawable/ic_baseline_location_on_24" />
 
     <TextView
@@ -121,12 +126,12 @@
         app:layout_constraintTop_toTopOf="@id/titleLocation"
         app:layout_constraintStart_toEndOf="@id/titleLocation"
         android:text="Rabat Maroc"
-        android:textSize="16sp" />
+        android:textSize="@dimen/text_size" />
 
     <ImageView
         android:id="@+id/staticMapRealty"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/height_staticMap_realty"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toBottomOf="@id/titleLocation"
         app:layout_constraintStart_toEndOf="@id/titleNumberOfRoom"

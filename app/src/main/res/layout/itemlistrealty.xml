@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/realtyShot"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/width_image_view_item_realty"
+        android:layout_height="@dimen/height_image_view_item_realty"
         android:scaleType="centerCrop"
         android:src="@drawable/belleappart"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,9 +24,44 @@
         android:text="House"
         android:paddingLeft="15dp"
         android:textStyle="bold"
-
+        android:textSize="@dimen/text_size"
+        />
+    <TextView
+        android:id="@+id/realtyTown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/realtyType"
+        app:layout_constraintTop_toTopOf="@id/realtyType"
+        android:text="Paris"
+        android:paddingLeft="3dp"
+        android:textSize="@dimen/text_size"
         />
 
+
+
+    <TextView
+        android:id="@+id/realtyDateEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/realtyType"
+        app:layout_constraintTop_toBottomOf="@id/realtyType"
+        android:text="2022-11-05"
+        android:paddingLeft="15dp"
+        android:textSize="@dimen/text_size"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/realtyPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/realtyType"
+        app:layout_constraintTop_toBottomOf="@id/realtyDateEntry"
+        android:text="$ 17 855 888  "
+        android:paddingLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#E6086F"
+        android:textSize="@dimen/text_size"/>
     <TextView
         android:id="@+id/realtyAvailable"
         android:layout_width="wrap_content"
@@ -38,28 +73,8 @@
         android:paddingRight="5dp"
         android:textStyle="bold"
         android:textColor="#DA0404"
-        android:drawableStart="@drawable/ic_baseline_info_24" />
-
-    <TextView
-        android:id="@+id/realtyTown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/realtyType"
-        app:layout_constraintTop_toBottomOf="@id/realtyType"
-        android:text="Paris"
-        android:paddingLeft="15dp"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:id="@+id/realtyPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/realtyType"
-        app:layout_constraintTop_toBottomOf="@id/realtyTown"
-        android:text="$ 17 855 888  "
-        android:paddingLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#E6086F" />
+        android:drawableStart="@drawable/ic_baseline_info_24"
+        android:textSize="@dimen/text_size"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

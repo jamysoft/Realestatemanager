@@ -70,7 +70,8 @@ interface RealtyDao {
                 "description_realty as description ,address,is_available as isAvailable,entry_date as entryDate " +
                 ",sale_date as saleDate,shot FROM  realty_table " +
                 "INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty " +
-                "where description_shot='MainShot' and surface > :minSurface and surface < :maxSurface and isAvailable= :isAvailable and (julianday(date('now')) - julianday(date(entry_date)) <= :seniority)"
+                "where description_shot='MainShot' and surface >= :minSurface and surface <= :maxSurface" +
+                " and isAvailable= :isAvailable and (julianday(date('now')) - julianday(date(entry_date)) <= :seniority)"
     )
     fun getRealtyBySurfaceAndSiniority(
         seniority: Int,

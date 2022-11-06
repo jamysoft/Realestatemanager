@@ -1,8 +1,11 @@
 package com.openclassrooms.realestatemanager
 
 import android.content.*
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +22,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.RangeSlider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.openclassrooms.realestatemanager.R.*
+import com.openclassrooms.realestatemanager.utils.Utils.Companion.isInternetAvailable
 import com.openclassrooms.realestatemanager.viewModels.RealStateManagerApplication
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModel
 import com.openclassrooms.realestatemanager.viewModels.RealtyViewModelFactory
@@ -74,18 +78,20 @@ class MainFragment : Fragment() {
         myToolbar = view.findViewById(R.id.topAppBar) as MaterialToolbar
         messageEmptyRecyclerView = view.findViewById(R.id.messageEmptyRecyclerView)
         activity.setSupportActionBar(myToolbar)
-        myToolbar?.setNavigationOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_mapsFragment)
+        if(isInternetAvailable(view.context) == true){
+                myToolbar?.setNavigationOnClickListener {
+                    NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_mapsFragment)
+                }
+            }
+        else{
+            myToolbar.navigationIcon=null
         }
+
         mRecyclerView = view.findViewById(R.id.recycleViewListRealty)
         adapter = ListRealtyAdapter(requireActivity().menuInflater, myViewModel, this)
         mRecyclerView.adapter = adapter
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
-            )
+        mRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         )
 
         //Fetch Realty from Database
@@ -120,6 +126,7 @@ class MainFragment : Fragment() {
                 startActivity(intent)
             }
             R.id.search -> {
+                myToolbar.setBackgroundColor(Color.parseColor("#FF6200EE"))
                 if (searchIsApplicated) {
                     myViewModel.getAllRealtyItem.observe(viewLifecycleOwner) {
                         if (it.isEmpty()) {
@@ -165,6 +172,7 @@ class MainFragment : Fragment() {
             })
             .setPositiveButton("OK", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
+                    myToolbar.setBackgroundColor(Color.parseColor("#FF018786"))
                     var minSurface = alertLayout.findViewById<RangeSlider>(R.id.minSurface).values[0].toInt()
                     var maxSurface = alertLayout.findViewById<RangeSlider>(R.id.maxSurface).values[0].toInt()
                     var maxSeniority = alertLayout.findViewById<RangeSlider>(R.id.maxSeniority).values[0].toInt()

@@ -30,6 +30,8 @@
     <string name="taux">Taux d\'intéret</string>
     <string name="monthlyAmount">Votre mensulatité sera de : </string>
     <string name="estimate">estimate monthly payement</string>
-    <string name="money">€</string>>
+    <string name="money">€</string>
+    <string name="dateOnLine">"Date putting online : "</string>
+    <string name="cama">", "</string>>
 
 </resources>

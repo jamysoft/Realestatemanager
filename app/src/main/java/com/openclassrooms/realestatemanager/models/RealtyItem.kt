@@ -1,8 +1,9 @@
 package com.openclassrooms.realestatemanager.models
 
 import android.graphics.Bitmap
+import java.io.Serializable
 
-class RealtyItem(
+class RealtyItem (
     val idRealty: Int,
     val type: String,
     val price: Int,
@@ -15,5 +16,4 @@ class RealtyItem(
     val entryDate: String,
     val saleDate: String?,
     val shot: Bitmap?
-
-)
+):Serializable

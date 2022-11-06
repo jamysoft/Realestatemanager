@@ -37,13 +37,13 @@ class ListRealtyAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current = getItem(position)
         holder.itemView.setOnClickListener {
-            // val intent = Intent(holder.itemView.context,DetailActivity::class.java)
-            val bundle = bundleOf(KEY_ID_REALTY to current.idRealty)
-            NavHostFragment.findNavController(mainFragment)
-                .navigate(R.id.action_mainFragment_to_detailFragment, bundle)
-            //intent.putExtra(KEY_ID_REALTY,current.idRealty )
-            // start detail activity
-            //startActivity(holder.itemView.context,intent,null)
+            val intent = Intent(holder.itemView.context,DetailActivity::class.java)
+          //  val bundle = bundleOf(KEY_ID_REALTY to current.idRealty)
+          //  NavHostFragment.findNavController(mainFragment)
+           //     .navigate(R.id.action_mainFragment_to_detailFragment, bundle)
+            intent.putExtra(KEY_ID_REALTY,current.idRealty )
+            //start detail activity
+            startActivity(holder.itemView.context,intent,null)
 
         }
 
@@ -110,20 +110,18 @@ class ListRealtyAdapter(
         private val realtyAvailable: TextView = itemView.findViewById(R.id.realtyAvailable)
         private val realtyPrice: TextView = itemView.findViewById(R.id.realtyPrice)
         private val realtyType: TextView = itemView.findViewById(R.id.realtyType)
-
+        private val realtyDateEntry: TextView = itemView.findViewById(R.id.realtyDateEntry)
         fun bind(currentRealty: RealtyItem) {
             realtyShot.setImageBitmap(currentRealty.shot)
-            realtyTown.text = currentRealty.town
-            realtyPrice.text = currentRealty.price.toString()
+            realtyTown.text =itemView.context.getString(R.string.cama)+ currentRealty.town
+            realtyPrice.text = currentRealty.price.toString()+itemView.context.getString(R.string.money)
             realtyType.text = currentRealty.type
+            realtyDateEntry.text=itemView.context.getString(R.string.dateOnLine) + currentRealty.entryDate
             if (currentRealty.isAvailable) {
                 realtyAvailable.text = itemView.context.getString(R.string.availableText)
                 realtyAvailable.setTextColor(Color.parseColor("#38A563"))
                 realtyAvailable.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(
-                        itemView.context,
-                        R.drawable.ic_baseline_info_24
-                    ), null, null, null
+                    ContextCompat.getDrawable(itemView.context, R.drawable.ic_baseline_info_24), null, null, null
                 )
             } else {
                 realtyAvailable.text = itemView.context.getString(R.string.SoldText)

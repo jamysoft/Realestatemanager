@@ -50,7 +50,7 @@ abstract class Utils {
             var size = listShot.size
             size--
             for (i in 0..size) {
-                arrayBitmap.add(listShot.get(i).shot)
+                arrayBitmap.add(listShot[i].shot)
             }
             return arrayBitmap
         }
@@ -62,14 +62,11 @@ abstract class Utils {
             // mByteArray.add(stream.toByteArray())
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             return bitmap
-
         }
         fun arrondiNumber(number:Float):String{
             val df = DecimalFormat("0.##")
             return df.format(number)
         }
-
-
     }
 
 }

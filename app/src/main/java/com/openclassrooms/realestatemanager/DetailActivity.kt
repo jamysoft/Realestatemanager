@@ -48,7 +48,6 @@ class DetailActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.layoutManager = layoutManager
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-
         //recuperate idRealty
         val idRealty = intent.extras!!.get(KEY_ID_REALTY)
         val mArrayBitmap = ArrayList<Bitmap>()
@@ -60,7 +59,6 @@ class DetailActivity : AppCompatActivity() {
                 mArrayBitmap.add(it[i].shot)
             }
             mImageadapter.submitList(mArrayBitmap)
-
         }
         myViewModel.getRealtyById(idRealty.toInt()).observe(this) {
             updateUI(it)
