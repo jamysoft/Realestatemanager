@@ -30,17 +30,19 @@ La date de vente du bien, s’il a été vendu ;
 
  */
 @Entity(
-    tableName = "realty_table",
+    tableName = "realty_table"
+    ,
     foreignKeys = [ForeignKey(
         entity = Agent::class,
         parentColumns = arrayOf("id_agent"),
         childColumns = arrayOf("id_agent"),
         onDelete = ForeignKey.CASCADE
     )]
+
 )
 data class Realty(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_realty") val idRealty: Int?,
+    @ColumnInfo(name = "id_realty") var idRealty: Int?,
     var type: String,
     var price: Int,
     var surface: Int,

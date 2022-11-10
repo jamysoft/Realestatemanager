@@ -23,7 +23,7 @@
         app:titleMarginStart="0dp"
         app:titleTextAppearance="@style/MyStyle"
         app:navigationIcon="@drawable/ic_baseline_keyboard_backspace_24"
-        android:theme="@style/TransperantToolbar"
+        android:theme="@style/TransparantToolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

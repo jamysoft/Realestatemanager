@@ -13,7 +13,8 @@ interface ShotDao {
     fun getAllShotByIdRealty(idRealty: Int): Flow<List<Shot>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(shot: Shot): Long
+   // suspend
+    fun insert(shot: Shot): Long
 
     @Update
     suspend fun updateShot(shot: Shot)

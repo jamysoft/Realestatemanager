@@ -67,7 +67,7 @@ class RealtyRepository(private val realtyDao: RealtyDao) {
         minSurface: Int,
         maxSurface: Int
     ): Flow<List<RealtyItem>> =
-        realtyDao.getRealtyBySurfaceAndSiniority(seniority, isAvailable, minSurface, maxSurface)
+        realtyDao.getRealtyBySurfaceAndSeniority(seniority, isAvailable, minSurface, maxSurface)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

@@ -26,7 +26,7 @@ import java.util.*
  */
 @Database(
     entities = [Realty::class, Agent::class, Shot::class, InterestPoints::class, RealtyInterestPoints::class],
-    version = 4
+    version = 5
 )
 @TypeConverters(Converters::class)
 abstract class RealstateRoomDatabase : RoomDatabase() {
@@ -47,10 +47,8 @@ abstract class RealstateRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     RealstateRoomDatabase::class.java,
-                    "Post_database3"
+                    "Post_database4"
                 )
-                    // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
                     .addCallback(RealstateDatabaseCallback(scope))
                     .build()
@@ -89,7 +87,6 @@ abstract class RealstateRoomDatabase : RoomDatabase() {
             agentDao.insert(agent)
             var agent2 = Agent(null, "Mizo", "Ezra", "ezra@gmail.com", "06854547")
             agentDao.insert(agent2)
-
 
             //add realty 1 and her shot
             var realty = Realty(
@@ -315,5 +312,7 @@ abstract class RealstateRoomDatabase : RoomDatabase() {
              shotDao.insert(shot)
 
         }
+
+
     }
 }

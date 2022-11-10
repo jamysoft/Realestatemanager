@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.dao
 
+import android.database.Cursor
 import androidx.room.*
 import com.openclassrooms.realestatemanager.models.Realty
 import com.openclassrooms.realestatemanager.models.RealtyItem
@@ -13,14 +14,20 @@ interface RealtyDao {
     @Query("SELECT * FROM realty_table ORDER BY id_realty DESC")
     fun getAllRealtyNewerToOlder(): Flow<List<Realty>>
 
+
+    @Query("SELECT * FROM realty_table ORDER BY id_realty DESC")
+    fun getRealtyItemWithCursor(): Cursor?
+
     @Query("SELECT * FROM realty_table WHERE id_realty = :id")
     fun getRealtyById(id: Int): Flow<Realty>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(realty: Realty): Long
+   // suspend
+    fun insert(realty: Realty): Long
 
     @Update
-    suspend fun updateRealty(Realty: Realty)
+    //suspend
+    fun updateRealty(Realty: Realty):Int
 
     @Query("UPDATE realty_table SET is_available = 0 WHERE id_realty= :id")
     suspend fun updateStatusRealty(id: Int)
@@ -30,7 +37,8 @@ interface RealtyDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM realty_table WHERE id_realty = :id ")
-    suspend fun deleteRealtyById(id: Int)
+    //suspend
+    fun deleteRealtyById(id: Int):Int
 
     /* @Query("SELECT realty_table .id_realty,type,price,surface,number_piece,town,address,is_available,entry_date,sale_date,shot FROM  realty_table INNER JOIN SHOT_TABLE ON realty_table.id_realty=SHOT_TABLE.id_realty")
      fun getAllRealtyItem():Flow<List<RealtyItem>>
@@ -73,7 +81,7 @@ interface RealtyDao {
                 "where description_shot='MainShot' and surface >= :minSurface and surface <= :maxSurface" +
                 " and isAvailable= :isAvailable and (julianday(date('now')) - julianday(date(entry_date)) <= :seniority)"
     )
-    fun getRealtyBySurfaceAndSiniority(
+    fun getRealtyBySurfaceAndSeniority(
         seniority: Int,
         isAvailable: Int,
         minSurface: Int,

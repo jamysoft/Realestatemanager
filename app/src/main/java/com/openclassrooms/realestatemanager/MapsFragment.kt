@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -147,6 +148,7 @@ class MapsFragment : Fragment() {
         }
         return latlng
     }
+    @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
         if(checkPermission()){
             if(isLocationEnabled()){
